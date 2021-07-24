@@ -10,13 +10,13 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 - Library-styled ORM
 - Database transactions
 - Database migrations
-- Tracking of database changes to support offline apps and an undo functionality
-- Powerful generalized data API
+- **Tracking of database changes to support offline apps and an undo functionality**
+- **Powerful generalized data API**
 - Remote Method Call API instead of REST API
 - Business-logic to API approach
 - Support for API versions
 - Typed JSON lets you recreate the exact type of an object when deserializing
-- Subscription to WebSocket-based data change events to support instant UI updates in your apps
+- **Subscription to WebSocket-based data change events to support instant UI updates in your apps**
 - No framework but architectural patterns in combination with libraries
 - Very lean, very little dependencies
 
