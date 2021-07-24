@@ -4,6 +4,8 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 
 ## Features
 
+- Development, testing and production configurations
+- Change log levels without rebooting the server
 - Sophisticated data validation
 - Library-styled ORM
 - Database transactions
