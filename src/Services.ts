@@ -58,7 +58,6 @@ export default class Services {
   async startServer() {
     // HTTP Server
     this.httpServer = http.createServer()
-    this.httpServer.listen(this.config.httpApi.port)
 
     // WebSocket Server          
     this.webSocketServer = new WebSocket.Server({
