@@ -7,6 +7,7 @@ import Services from './Services'
 class App {
     async start() {
         await Services.get().start()
+        await Services.get().dbMigration.migrate()
     }
 }
 

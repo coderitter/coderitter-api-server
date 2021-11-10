@@ -1,4 +1,5 @@
 import Log from 'knight-log'
+import { PoolConfig } from 'pg'
 import { HttpApiConfig } from './api/HttpApi'
 
 let log = new Log('config.ts')
@@ -10,6 +11,13 @@ const databaseName = 'coderitter'
  */
 export const dev = {
 
+    db: <PoolConfig> {
+        host: 'db',
+        user: databaseName,
+        password: '1234',
+        database: databaseName
+    },
+
     httpApi: <HttpApiConfig> {
         port: 3000
     }
@@ -19,12 +27,24 @@ export const dev = {
  * Test config
  */
 export const test = merge(dev, {
+
+    db: <PoolConfig> {
+        host: 'dbtest',
+        user: databaseName + '_test',
+        database: databaseName + '_test'
+    },
 })
 
 /**
  * Production config
  */
 export const prod = merge(dev, {
+
+    db: <PoolConfig> {
+        host: 'db',
+        user: databaseName + '_prod',
+        database: databaseName + '_prod'
+    }
 })
 
 /**

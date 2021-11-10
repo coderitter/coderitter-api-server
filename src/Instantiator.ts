@@ -8,6 +8,7 @@ export default {
     'Changes': () => new Changes,
     'Change': () => new Change,
 
+    // Common results
     'Result': () => new Result,
     'EntityResult': () => new EntityResult,
     'EntitiesResult': () => new EntitiesResult,

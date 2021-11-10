@@ -1,6 +1,8 @@
 import { Changes } from 'knight-change'
 import { toJson } from 'knight-json'
 import Log from 'knight-log'
+import { PgTransaction } from 'knight-pg-transaction'
+import { Pool } from 'pg'
 import WebSocket from 'ws'
 import ChangeLogic from '../domain/change/ChangeLogic'
 
@@ -9,6 +11,7 @@ let log = new Log('WebSocketApi.ts')
 export default class WebSocketApi {
 
     webSocketServer!: WebSocket.Server
+    pool!: Pool
     changeLogic!: ChangeLogic
 
     lastVersion?: number
@@ -87,16 +90,17 @@ export default class WebSocketApi {
 
         let changeReadResult
         try {
-            changeReadResult = await this.changeLogic.read({ version: { operator: '>', value: lastVersion }, '@orderBy': 'version' }/*, new PgTransaction(this.pool)*/)
+            changeReadResult = await this.changeLogic.read({ version: { operator: '>', value: lastVersion }, '@orderBy': 'version' }, new PgTransaction(this.pool))
         }
         catch (e) {
             l.error(e)
-            throw new Error(<any>e)
+            throw new Error(e)
         }
 
         l.var('changeReadResult', changeReadResult)
 
         let changes = new Changes
+        changes.changes = changeReadResult.entities
 
         let clients: WebSocket[]
         if (client != undefined) {

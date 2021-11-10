@@ -1,15 +1,21 @@
 import http from 'http'
 import Log from 'knight-log'
+import { Pool } from 'pg'
 import WebSocket from 'ws'
 import ApiV1 from './api/ApiV1'
 import HttpApi from './api/HttpApi'
 import WebSocketApi from './api/WebSocketApi'
 import { getConfigByArgvOrEnvOrDefault, test } from './config'
 import ChangeLogic from './domain/change/ChangeLogic'
+import DbMigration from './domain/DbMigration'
+import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
 
 let log = new Log('Services.ts')
 
+/**
+ * 
+ */
 export default class Services {
 
     private static instance: Services = new Services()
@@ -19,6 +25,8 @@ export default class Services {
     }
   
     config = getConfigByArgvOrEnvOrDefault()
+
+    pool!: Pool
 
     httpServer!: http.Server
     webSocketServer!: WebSocket.Server
@@ -43,6 +51,7 @@ export default class Services {
     }
 
     async startDb() {
+        this.pool = new Pool(this.config.db)
         log.admin('Created database connection pool', 'Config =', this.config.db)
     }
 
@@ -65,8 +74,10 @@ export default class Services {
 
         this.webSocketApi = new WebSocketApi
         this.webSocketApi.webSocketServer = this.webSocketServer
+        this.webSocketApi.pool = this.pool
         this.webSocketApi.changeLogic = this.changeLogic
 
+        this.apiV1.pool = this.pool
         this.apiV1.webSocketApi = this.webSocketApi
 
         this.httpApi.start()
@@ -79,6 +90,11 @@ export default class Services {
 
     async stop() {
         log.admin('Stopping services...')
+
+        if (this.pool) {
+            this.pool.end()
+            log.admin('Stopped database connections')
+        }
 
         if (this.httpServer) {
             this.httpServer.close()
@@ -96,5 +112,13 @@ export default class Services {
     useTestConfig() {
         log.admin('Using test config')
         this.config = test
+    }
+
+    get dbMigration(): DbMigration {
+        return new DbMigration(this.pool)
+    }
+
+    get demoData(): DemoData {
+        return new DemoData(this.pool)
     }
 }
