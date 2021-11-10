@@ -5,10 +5,9 @@ import Services from './Services'
  * the database to the newest version.
  */
 class App {
-  async start() {
-    await Services.get().start()
-    await Services.get().dbMigration.migrate()
-  }
+    async start() {
+        await Services.get().start()
+    }
 }
 
 let app = new App()

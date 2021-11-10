@@ -4,16 +4,15 @@ import { CountResult, CreateOrGetResult, EntitiesResult, EntitiesVersionResult, 
 import Change from './domain/change/Change'
 
 export default {
-  // change
-  'Changes': () => new Changes,
-  'Change': () => new Change,
+    // change
+    'Changes': () => new Changes,
+    'Change': () => new Change,
 
-  // Common results
-  'Result': () => new Result,
-  'EntityResult': () => new EntityResult,
-  'EntitiesResult': () => new EntitiesResult,
-  'EntitiesVersionResult': () => new EntitiesVersionResult,
-  'CreateOrGetResult': () => new CreateOrGetResult,
-  'CountResult': () => new CountResult
+    'Result': () => new Result,
+    'EntityResult': () => new EntityResult,
+    'EntitiesResult': () => new EntitiesResult,
+    'EntitiesVersionResult': () => new EntitiesVersionResult,
+    'CreateOrGetResult': () => new CreateOrGetResult,
+    'CountResult': () => new CountResult
   
 } as {[ className: string ]: () => any }

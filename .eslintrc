@@ -1,0 +1,18 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+     "extends": [
+     ],
+    "rules" : {
+        "no-console": 1,
+        "semi":[1, "never"],
+        "no-restricted-imports": 1,
+        "camelcase" : 1,
+        "object-curly-newline":1, // enforce consistent line breaks after opening and before closing braces
+        "brace-style": [1, "stroustrup"], 
+        "indent":[1, 4]
+    }
+  }

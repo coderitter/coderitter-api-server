@@ -18,48 +18,48 @@ let log = new Log('HttpApi.ts')
  */
 export default class HttpApi {
 
-  server!: http.Server
-  api: RemoteMethodApi
-  instantiator: {[ className: string ]: () => any }
-  config: HttpApiConfig = {}
+    server!: http.Server
+    api: RemoteMethodApi
+    instantiator: {[ className: string ]: () => any }
+    config: HttpApiConfig = {}
 
-  constructor(api: RemoteMethodApi, instantiator: {[ className: string ]: () => any }, config?: HttpApiConfig) {
-    this.api = api
-    this.instantiator = instantiator
-    this.config = config || this.config
-  }
+    constructor(api: RemoteMethodApi, instantiator: {[ className: string ]: () => any }, config?: HttpApiConfig) {
+        this.api = api
+        this.instantiator = instantiator
+        this.config = config || this.config
+    }
   
-  /**
+    /**
    * Adds a listener to the native Node HTTP server which accepts remote method calls.
    */
-  async start(): Promise<void> {
-    this.server.addListener('request', (request, response) => {
-      let l = log.fn('handler')
-      if (request.url == '/api_v1') {
-        let data = ''
+    async start(): Promise<void> {
+        this.server.addListener('request', (request, response) => {
+            let l = log.fn('handler')
+            if (request.url == '/api_v1') {
+                let data = ''
 
-        request.on('data', (chunk: any) => {
-          data += chunk
+                request.on('data', (chunk: any) => {
+                    data += chunk
+                })
+
+                request.on('end', () => {
+                    this.handlePostOnlyRequest(data, request, response)
+                })
+            }
+            else {
+                response.end()
+            }
         })
 
-        request.on('end', () => {
-          this.handlePostOnlyRequest(data, request, response)
+        return new Promise<void>((resolve, reject) => {
+            this.server?.listen(this.config.port, () => {
+                log.admin('HTTP API started at ' + this.config.port)
+                resolve()
+            })
         })
-      }
-      else {
-        response.end()
-      }
-    })
+    }
 
-    return new Promise<void>((resolve, reject) => {
-      this.server?.listen(this.config.port, () => {
-        log.admin('HTTP API started at ' + this.config.port)
-        resolve()
-      })
-    })
-  }
-
-  /**
+    /**
    * Handles a POSTonly HTTP style request. It tries to parse the received data as a JSON string, calls 
    * the remote method and sends back the result to the client.
    * 
@@ -67,51 +67,51 @@ export default class HttpApi {
    * @param request 
    * @param response 
    */
-  async handlePostOnlyRequest(data: any, request: http.IncomingMessage, response: http.ServerResponse) {
-    let l = log.fn('handlePostOnlyRequest')
-    l.param('request.url', request.url)
-    l.param('data', data)
+    async handlePostOnlyRequest(data: any, request: http.IncomingMessage, response: http.ServerResponse) {
+        let l = log.fn('handlePostOnlyRequest')
+        l.param('request.url', request.url)
+        l.param('data', data)
 
-    let result: Result|undefined = undefined
+        let result: Result|undefined = undefined
 
-    let remoteMethodCall: RemoteMethodCall|undefined = undefined
-    try {
-      remoteMethodCall = <RemoteMethodCall> fromJsonObj(data, { instantiator: this.instantiator })
-    }
-    catch (e) {
-      l.error('Could not parse the JSON containing the RemoteMethodCall')
-      result = Result.remoteError('Could not parse the JSON containing the RemoteMethodCall')
-    }
+        let remoteMethodCall: RemoteMethodCall|undefined = undefined
+        try {
+            remoteMethodCall = <RemoteMethodCall> fromJsonObj(data, { instantiator: this.instantiator })
+        }
+        catch (e) {
+            l.error('Could not parse the JSON containing the RemoteMethodCall')
+            result = Result.remoteError('Could not parse the JSON containing the RemoteMethodCall')
+        }
 
-    l.var('remoteMethodCall', remoteMethodCall)
+        l.var('remoteMethodCall', remoteMethodCall)
     
-    // if the result is not already erroneous
-    if ((! result || result && ! result.isRemoteError()) && remoteMethodCall) {
-      l.user('Calling method...')
-      result = await this.api.callMethod(remoteMethodCall)
+        // if the result is not already erroneous
+        if ((! result || result && ! result.isRemoteError()) && remoteMethodCall) {
+            l.user('Calling method...')
+            result = await this.api.callMethod(remoteMethodCall)
+        }
+
+        l.var('result', result)
+
+        let resultObj = toJsonObj(result)
+        l.var('resultObj', resultObj)
+
+        let resultJson
+        try {
+            resultJson = JSON.stringify(resultObj)
+            l.var('resultJson', resultJson)
+        }
+        catch (e) {
+            l.error('Could not stringify result to JSON.', e)
+            let errorResult = Result.remoteError('Could not stringify result to JSON')
+            let errorResultObj = toJsonObj(errorResult)
+            resultJson = JSON.stringify(errorResultObj)
+        }
+
+        response.setHeader('Access-Control-Allow-Origin', '*')
+        response.end(resultJson, 'utf-8')
+        l.user('Response was send')
     }
-
-    l.var('result', result)
-
-    let resultObj = toJsonObj(result)
-    l.var('resultObj', resultObj)
-
-    let resultJson
-    try {
-      resultJson = JSON.stringify(resultObj)
-      l.var('resultJson', resultJson)
-    }
-    catch (e) {
-      l.error('Could not stringify result to JSON.', e)
-      let errorResult = Result.remoteError('Could not stringify result to JSON')
-      let errorResultObj = toJsonObj(errorResult)
-      resultJson = JSON.stringify(errorResultObj)
-    }
-
-    response.setHeader('Access-Control-Allow-Origin', '*')
-    response.end(resultJson, 'utf-8')
-    l.user('Response was send')
-  }
 }
 
 export interface HttpApiConfig {

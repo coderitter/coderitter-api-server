@@ -10,18 +10,18 @@ services:
       - './:/hostdir'
     environment: 
       - MODE=dev
-    depends_on: 
-      - db
+    # depends_on: 
+    #   - db
     networks:
       - coderitter
-  db:
-    image: 'postgres'
-    environment:
-      - POSTGRES_DB=coderitter
-      - POSTGRES_USER=coderitter
-      - POSTGRES_PASSWORD=1234
-    networks: 
-      - coderitter
+  # db:
+  #   image: 'postgres'
+  #   environment:
+  #     - POSTGRES_DB=coderitter
+  #     - POSTGRES_USER=coderitter
+  #     - POSTGRES_PASSWORD=1234
+  #   networks: 
+  #     - coderitter
 networks:
   coderitter:
     external: true
