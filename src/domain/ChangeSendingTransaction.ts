@@ -1,6 +1,6 @@
-import Log from 'knight-log'
 import { PgTransaction } from 'knight-pg-transaction'
 import { Pool } from 'pg'
+import { Log } from 'knight-log'
 import WebSocketApi from '../api/WebSocketApi'
 import ChangeLogic from '../domain/change/ChangeLogic'
 
@@ -16,7 +16,7 @@ export class ChangeSendingTransaction extends PgTransaction {
         this.afterBegin(async () => {
             let l = log.fn('onAfterBegin')
             this.versionBefore = await changeLogic.latestVersion(this)
-            l.var('this.versionBefore', this.versionBefore)
+            l.dev('this.versionBefore', this.versionBefore)
         })
 
         this.afterCommit(() => {

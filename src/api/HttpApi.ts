@@ -2,7 +2,7 @@ import { RemoteMethodApi } from 'coderitter-api-remote-method-api'
 import { RemoteMethodCall, Result } from 'coderitter-api-remote-method-call'
 import http from 'http'
 import { fromJsonObj, toJsonObj } from 'knight-json'
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 
 let log = new Log('HttpApi.ts')
 
@@ -83,23 +83,23 @@ export default class HttpApi {
             result = Result.remoteError('Could not parse the JSON containing the RemoteMethodCall')
         }
 
-        l.var('remoteMethodCall', remoteMethodCall)
+        l.dev('remoteMethodCall', remoteMethodCall)
     
         // if the result is not already erroneous
         if ((! result || result && ! result.isRemoteError()) && remoteMethodCall) {
-            l.user('Calling method...')
+            l.admin('Calling method...')
             result = await this.api.callMethod(remoteMethodCall)
         }
 
-        l.var('result', result)
+        l.dev('result', result)
 
         let resultObj = toJsonObj(result)
-        l.var('resultObj', resultObj)
+        l.dev('resultObj', resultObj)
 
         let resultJson
         try {
             resultJson = JSON.stringify(resultObj)
-            l.var('resultJson', resultJson)
+            l.dev('resultJson', resultJson)
         }
         catch (e) {
             l.error('Could not stringify result to JSON.', e)
@@ -110,7 +110,7 @@ export default class HttpApi {
 
         response.setHeader('Access-Control-Allow-Origin', '*')
         response.end(resultJson, 'utf-8')
-        l.user('Response was send')
+        l.admin('Response was send')
     }
 }
 

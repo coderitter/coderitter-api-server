@@ -1,6 +1,6 @@
-import Log from 'knight-log'
 import { PgTransaction } from 'knight-pg-transaction'
 import { Pool } from 'pg'
+import { Log } from 'knight-log'
 
 let log = new Log('DemoData.ts')
 

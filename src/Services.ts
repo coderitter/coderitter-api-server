@@ -1,6 +1,6 @@
 import http from 'http'
-import Log from 'knight-log'
 import { Pool } from 'pg'
+import { Log } from 'knight-log'
 import WebSocket from 'ws'
 import ApiV1 from './api/ApiV1'
 import HttpApi from './api/HttpApi'

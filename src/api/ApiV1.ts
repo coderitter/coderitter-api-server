@@ -1,7 +1,8 @@
 import { RemoteMethodApi } from 'coderitter-api-remote-method-api'
-import Log from 'knight-log'
 import { PgTransaction } from 'knight-pg-transaction'
 import { Pool } from 'pg'
+import { Log } from 'knight-log'
+
 import { ChangeSendingTransaction } from '../domain/ChangeSendingTransaction'
 import Services from '../Services'
 import WebSocketApi from './WebSocketApi'

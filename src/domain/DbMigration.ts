@@ -1,4 +1,4 @@
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 import { PostgresMigration } from 'knight-pg-migration'
 import { Pool } from 'pg'
 

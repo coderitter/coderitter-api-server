@@ -1,5 +1,5 @@
-import Log from 'knight-log'
 import { PoolConfig } from 'pg'
+import { Log } from 'knight-log'
 import { HttpApiConfig } from './api/HttpApi'
 
 let log = new Log('config.ts')
