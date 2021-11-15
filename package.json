@@ -19,7 +19,7 @@
     "knight-change": "^1.0.0",
     "knight-criteria": "^1.0.0",
     "knight-json": "^1.0.1",
-    "knight-log": "^1.0.0",
+    "knight-log": "^1.0.6",
     "knight-orm": "^0.1.0",
     "knight-validation": "^1.0.0",
     "ws": "^7.4.5"

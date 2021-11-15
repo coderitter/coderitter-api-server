@@ -1,4 +1,4 @@
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 import WebSocketApi from '../api/WebSocketApi'
 import ChangeLogic from '../domain/change/ChangeLogic'
 

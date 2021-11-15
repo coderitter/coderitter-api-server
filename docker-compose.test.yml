@@ -1,13 +1,5 @@
 version: '3.7'
 services:
-  # dbtest:
-  #   image: 'postgres'
-  #   environment:
-  #     - POSTGRES_DB=coderitter_test
-  #     - POSTGRES_USER=coderitter_test
-  #     - POSTGRES_PASSWORD=1234
-  #   networks:
-  #     - coderittertest
 networks:
   coderittertest:
     external: true

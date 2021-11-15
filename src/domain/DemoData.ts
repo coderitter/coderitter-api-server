@@ -1,4 +1,4 @@
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 
 let log = new Log('DemoData.ts')
 

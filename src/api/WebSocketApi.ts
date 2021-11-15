@@ -1,6 +1,6 @@
 import { Changes } from 'knight-change'
 import { toJson } from 'knight-json'
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 import WebSocket from 'ws'
 import ChangeLogic from '../domain/change/ChangeLogic'
 
@@ -18,29 +18,29 @@ export default class WebSocketApi {
     start() {
         this.webSocketServer.on('connection', (socket, request) => {
             let l = log.fn('onConnection')
-            l.user('New WebSocket connection from ' + request.connection.remoteAddress)
+            l.admin('New WebSocket connection from ' + request.connection.remoteAddress)
 
             socket.on('message', (data: WebSocket.Data) => {
                 let l = log.fn('onMessage')
 
                 if (typeof data == 'string') {
-                    l.var('data', data)
+                    l.dev('data', data)
 
                     if (data == 'pong') {
-                        l.user('Received pong...')
+                        l.admin('Received pong...')
                         ;(socket as any).isAlive = true
                     }
                     else {
-                        l.user('Received version number...')
+                        l.admin('Received version number...')
                         let version = parseInt(data)
-                        l.var('version', version)
+                        l.dev('version', version)
 
                         if (isNaN(version)) {
                             l.error('Received version is not a number. Returning...')
                             return
                         }
   
-                        l.user('Received version. Sending changes...')
+                        l.admin('Received version. Sending changes...')
                         this.sendChanges(version, socket)  
                     }
                 }
@@ -61,19 +61,19 @@ export default class WebSocketApi {
             let l = log.fn('onPingInterval')
 
             if (this.webSocketServer.clients.size == 0) {
-                l.user('No connected clients. Returning...')
+                l.admin('No connected clients. Returning...')
                 return
             }
 
             for (let client of this.webSocketServer.clients) {
                 if ((client as any).isAlive === false) {
-                    l.user('Found dead client. Terminating...')
+                    l.admin('Found dead client. Terminating...')
                     client.terminate()
                     continue
                 }
 
                 ;(client as any).isAlive = false
-                l.user('Pinging client...')
+                l.admin('Pinging client...')
                 client.send('ping')
             }
         }, 30000)
@@ -81,9 +81,9 @@ export default class WebSocketApi {
 
     async sendChanges(lastVersion: number, client?: WebSocket) {
         let l = log.mt('sendChanges')
-        l.var('versionBefore', lastVersion)
+        l.dev('versionBefore', lastVersion)
 
-        l.user('Retrieving all changes since the last ones...')
+        l.admin('Retrieving all changes since the last ones...')
 
         let changeReadResult
         try {
@@ -94,28 +94,28 @@ export default class WebSocketApi {
             throw new Error(<any>e)
         }
 
-        l.var('changeReadResult', changeReadResult)
+        l.dev('changeReadResult', changeReadResult)
 
         let changes = new Changes
 
         let clients: WebSocket[]
         if (client != undefined) {
             if (! (client as any).sendingChanges) {
-                l.user('Using single given WebSocket client...')
+                l.admin('Using single given WebSocket client...')
                 clients = [ client ]
             }
             else {
-                l.user('Client is already sending changes. Returning...')
+                l.admin('Client is already sending changes. Returning...')
                 return
             }
         }
         else {
-            l.user('Using all clients which are not sending...')
+            l.admin('Using all clients which are not sending...')
 
             clients = []
             for (let client of this.webSocketServer.clients) {
                 if ((client as any).sendingChanges) {
-                    l.user('Client is already sending changes. Continuing...')
+                    l.admin('Client is already sending changes. Continuing...')
                     continue
                 }
   
@@ -125,14 +125,14 @@ export default class WebSocketApi {
         }
 
 
-        l.user('Converting changes to json...')
+        l.admin('Converting changes to json...')
         let changesJson = toJson(changes)
-        l.var('changesJson', changesJson)
+        l.dev('changesJson', changesJson)
 
-        l.user('Sending changes to every client...')
+        l.admin('Sending changes to every client...')
 
         for (let client of clients) {
-            l.var('client', (client as any)._socket._peername.address)
+            l.dev('client', (client as any)._socket._peername.address)
 
             client.send(changesJson, (e: Error|undefined) => {
                 if (e != undefined) {
@@ -141,7 +141,7 @@ export default class WebSocketApi {
             })
         }
 
-        l.user('Setting all clients to not sending...')
+        l.admin('Setting all clients to not sending...')
 
         for (let client of clients) {
             (client as any).sendingChanges = false

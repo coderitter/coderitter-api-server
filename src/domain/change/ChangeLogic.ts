@@ -1,5 +1,5 @@
 import { ReadCriteria } from 'knight-criteria'
-import Log from 'knight-log'
+import { Log } from 'knight-log'
 import Change from './Change'
 
 let log = new Log('ChangeLogic.ts')
