@@ -95,7 +95,6 @@ export default class HttpApi {
         }
 
         l.dev('remoteMethodCall', remoteMethodCall)
-
         // if the result is not already erroneous
         if (
             (!result || (result && !result.isRemoteError())) &&
