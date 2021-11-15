@@ -1,7 +1,6 @@
 import { Result } from 'coderitter-api-remote-method-call'
 
 export class EntityResult<T> extends Result {
-
     entity: T
 
     constructor(entity?: T) {
@@ -11,7 +10,6 @@ export class EntityResult<T> extends Result {
 }
 
 export class EntityOrNullResult<T> extends Result {
-
     entity?: T
 
     constructor(entity?: T) {
@@ -21,9 +19,8 @@ export class EntityOrNullResult<T> extends Result {
 }
 
 export class EntitiesResult<T> extends Result {
-
     entities: T[]
-  
+
     constructor(entities?: T[]) {
         super()
 
@@ -32,7 +29,6 @@ export class EntitiesResult<T> extends Result {
 }
 
 export class EntitiesVersionResult<T> extends EntitiesResult<T> {
-
     version: number
 
     constructor(entities?: T[], version?: number) {
@@ -43,7 +39,6 @@ export class EntitiesVersionResult<T> extends EntitiesResult<T> {
 }
 
 export class CreateOrGetResult<T> extends EntityResult<T> {
-  
     created?: boolean
 
     constructor(entity?: T, created?: boolean) {
@@ -54,7 +49,6 @@ export class CreateOrGetResult<T> extends EntityResult<T> {
 }
 
 export class CountResult extends Result {
-  
     count: number
 
     constructor(count?: number) {
