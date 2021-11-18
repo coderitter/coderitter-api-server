@@ -22,6 +22,20 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 - No framework but architectural patterns in combination with libraries
 - Very lean, very little dependencies
 
+## Get started
+
+- clone this project in the folder of your new project
+- create a new git repository for your new project
+- switch to the branch you want to use (depending on which database you want to use)
+- rename the orgin of the coderitter-api project
+- add your new project as origin in this project
+  ```
+  git remote add origin
+  ```
+- rename the exsiting branch in your project in "master"
+- set the default branch in your project to "master"
+- delete the other branch 
+
 ## Programming instead of configuring
 
 Frameworks are blackboxes which hide their inner workings. They are supposed to be adjusted by configuring them. For example, the programer can set certain properties or provide a piece of code which then at a later point in time is executed by the framework. The programer gives control to the framework.
