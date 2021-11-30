@@ -1,4 +1,8 @@
+> **⚠ Not working yet, knight-orm is outded**
+
 # Coderitter API Architecture
+
+<img src="./readmeFiles/coderitterApi.png" alt="coderitter Architecture"/>
 
 The Coderitter API Architecture is a cloud application architecture which emphasizes programming instead of configuring. It is not a framework but a guidance on how to program.
 
@@ -19,6 +23,30 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 - **Subscription to WebSocket-based data change events to support instant UI updates in your apps**
 - No framework but architectural patterns in combination with libraries
 - Very lean, very little dependencies
+
+## Get started
+
+- clone this project in the folder of your new project
+- create a new git repository for your new project
+- switch to the branch you want to use (depending on which database you want to use)
+- rename the orgin of the coderitter-api project
+- add your new project as origin in this project
+  ```
+  git remote add origin
+  ```
+- rename the exsiting branch in your project in "master"
+- set the default branch in your project to "master"
+- delete the other branch 
+
+### create a new Database
+
+As example database, the database knight is given. 
+
+Start with creating an new folder in `src/domain/<newDatabase>`. In this folder you now create at least threee files: `NewDatabase.ts`, `NewDatabaseLogic`, `validator.ts`. If ypou need, you also can create an `api.ts`, if you need a few new datatypes, which aren't already in `src/domain/api.ts`. 
+
+In the next step you had to create the entry for this database in `src/domain/DbShema.ts` and `src/domain/DbMigration.ts`.
+
+After that you can create an instance of the new datatype, the database should present, in `src/domain/Instanciator.ts`.
 
 ## Programming instead of configuring
 
@@ -125,7 +153,7 @@ There is already one object included in this package. The `Change` class is base
 
 ### Database migration
 
-After you created your domain objects you will want to create the corresponding database schema. Since you will make changes to the schema during the development process you will need a way to migrate you database schema. This architecture uses the package [knight-pg-migration](https://github.com/c0deritter/knight-pg-migration) to solve this problem.
+After you created your domain objects you will want to create the corresponding database schema. Since you will make changes to the schema during the development process you will need a way to migrate you database schema. This architecture uses the package [knight-maria-migration](https://github.com/c0deritter/knight-maria-migration) to solve this problem.
 
 ### Database schema
 
@@ -141,7 +169,7 @@ Another useful package might be [knight-sql-criteria-filler](https://github.com/
 
 ### Database transactions
 
-Database transactions rely on the package [knight-pg-transaction](https://github.com/c0deritter/knight-pg-transaction). It provides a simple yet useful class to begin, commit and rollback PostgreSQL database transcations. This architecture defines a sophisticated `ChangeSendingTransaction` which is to be used in conjunction with `create`, `update` and `delete` functionality. This kind of transaction will send a change event to all clients via the WebSocket API. That way every connected client stays up-to-date.
+Database transactions rely on the package [knight-maria-transaction](https://github.com/c0deritter/knight-maria-transaction). It provides a simple yet useful class to begin, commit and rollback MariaDB database transcations. This architecture defines a sophisticated `ChangeSendingTransaction` which is to be used in conjunction with `create`, `update` and `delete` functionality. This kind of transaction will send a change event to all clients via the WebSocket API. That way every connected client stays up-to-date.
 
 ### Demo data
 

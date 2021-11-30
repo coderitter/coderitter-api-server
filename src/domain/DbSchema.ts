@@ -2,17 +2,18 @@ import { fromJson, toJson } from 'knight-json'
 import { Schema } from 'knight-orm'
 import instantiator from '../Instantiator'
 import Change from './change/Change'
+import Knight from './knight/Knight'
 
 export default {
-    onchange: {
+    'onchange': {
         columns: {
-            version: { property: 'version', id: true },
-            entityname: 'entityName',
-            method: 'method',
-            entity: 'entity'
+            'version': { property: 'version', id: true },
+            'entityname': 'entityName',
+            'method': 'method',
+            'entity': 'entity'
         },
         rowToInstance: (row: any) => {
-            let change = new Change()
+            let change = new Change
 
             change.version = row['version']
             change.entityName = row['entityname']
@@ -40,5 +41,29 @@ export default {
                 entity: toJson(change.entity)
             }
         }
+    },
+    'knight':{
+        columns:{
+            'id': {property: 'id', id: true},
+            'name': 'name',
+            'adress': 'adress'
+        },
+        rowToInstance: (row: any) => {
+            let knight = new Knight
+
+            knight.id = row['id']
+            knight.name = row['name']
+            knight.adress = row['adress'] != null ? JSON.parse(row['adress']) : row['adress']
+
+            return knight
+        },
+        instanceToRow: (knight: Knight) => {
+            return {
+                id: knight.id,
+                name: knight.name,
+                adress: knight.adress != undefined ? JSON.stringify(knight.adress) : undefined
+            }
+        }
     }
+
 } as Schema

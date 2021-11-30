@@ -11,6 +11,7 @@ import ChangeLogic from './domain/change/ChangeLogic'
 import DbMigration from './domain/DbMigration'
 import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
+import KnightLogic from './domain/knight/KnightLogic'
 
 let log = new Log('Services.ts')
 
@@ -33,6 +34,7 @@ export default class Services {
     webSocketApi!: WebSocketApi
 
     changeLogic = new ChangeLogic()
+    knightLogic = new KnightLogic()
 
     async start() {
         log.admin('Starting services...')
@@ -136,6 +138,6 @@ export default class Services {
     }
 
     get demoData(): DemoData {
-        return new DemoData(this.pool)
+        return new DemoData(this.pool, this.knightLogic)
     }
 }

@@ -31,12 +31,19 @@ export default class DbMigration extends MariaMigration {
           description text,
           primary key (version)
         );`)
+
+            await this.pool.query(`
+        create table knight(
+            id int auto_increment primary key,
+            name varchar(40),
+            adress varchar(200)
+          );`)
         }
         catch (e) {
             throw new Error(<any>e)
         }
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add onchange table)')
+        log.admin('Migrated to version 1 (Add onchange and knight table)')
     }
 }
