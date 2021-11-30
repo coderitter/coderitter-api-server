@@ -1,4 +1,8 @@
+> **⚠ Not working yet, knight-orm is outded**
+
 # Coderitter API Architecture
+
+<img src="./readmeFiles/coderitterApi.png" alt="coderitter Architecture"/>
 
 The Coderitter API Architecture is a cloud application architecture which emphasizes programming instead of configuring. It is not a framework but a guidance on how to program.
 
@@ -19,6 +23,30 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 - **Subscription to WebSocket-based data change events to support instant UI updates in your apps**
 - No framework but architectural patterns in combination with libraries
 - Very lean, very little dependencies
+
+## Get started
+
+- clone this project in the folder of your new project
+- create a new git repository for your new project
+- switch to the branch you want to use (depending on which database you want to use)
+- rename the orgin of the coderitter-api project
+- add your new project as origin in this project
+  ```
+  git remote add origin
+  ```
+- rename the exsiting branch in your project in "master"
+- set the default branch in your project to "master"
+- delete the other branch 
+
+### create a new Database
+
+As example database, the database knight is given. 
+
+Start with creating an new folder in `src/domain/<newDatabase>`. In this folder you now create at least threee files: `NewDatabase.ts`, `NewDatabaseLogic`, `validator.ts`. If ypou need, you also can create an `api.ts`, if you need a few new datatypes, which aren't already in `src/domain/api.ts`. 
+
+In the next step you had to create the entry for this database in `src/domain/DbShema.ts` and `src/domain/DbMigration.ts`.
+
+After that you can create an instance of the new datatype, the database should present, in `src/domain/Instanciator.ts`.
 
 ## Programming instead of configuring
 
