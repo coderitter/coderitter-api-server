@@ -1,4 +1,4 @@
-export class Addres {
+export class Address {
     street: string
     houseNumber: string
     plz: string
@@ -27,7 +27,7 @@ export default class Knight {
 
     id?: number
     name?: string
-    addres?: Addres
+    address?: Address
    
     constructor(data?: Partial<Knight>) {
         Object.assign(this, data)

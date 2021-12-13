@@ -35,7 +35,7 @@ export default class DbMigration extends MariaMigration {
                 create table knight(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(40),
-                    addres VARCHAR(200)
+                    address VARCHAR(200)
                 );`)
         }
         catch (e) {
@@ -43,6 +43,6 @@ export default class DbMigration extends MariaMigration {
         }
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add onchange and knight table)')
+        log.admin('Migrated to version 1 (Add change and knight table)')
     }
 }

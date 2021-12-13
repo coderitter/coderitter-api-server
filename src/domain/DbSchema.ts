@@ -7,7 +7,7 @@ export const schema = new Schema
 
 schema.addTable('onchange',{
     columns:{
-        'version': { property: 'version', primaryKey: true, generated: true },
+        'version': { property:'version', primaryKey:true, generated:true },
         'entityname': 'entityName',
         'method': 'method',
         'entity': 'entity'
@@ -21,17 +21,15 @@ schema.addTable('knight', {
     columns:{
         'id': {property: 'id', primaryKey: true, generated: true },
         'name': 'name',
-        'addres': 'addres'
+        'address': 'address'
     },
     relationships: {},
     newInstance: () => new Knight,
     instanceToRow: (knight: Knight, row: any)=>{
-        row.addres = JSON.stringify(knight.addres)
-        return row
+        row.address = JSON.stringify(knight.address)
     },
     rowToInstance: (row: any, knight: Knight) =>{
-        knight.addres = JSON.parse(row.addres)
-        return knight
+        knight.address = JSON.parse(row.address)
     } 
 })
 

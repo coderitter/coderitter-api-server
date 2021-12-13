@@ -11,12 +11,7 @@ import { ChangeValidator } from './validators'
 let log = new Log('ChangeLogic.ts')
 
 export default class ChangeLogic {
-    orm: Orm
-
-    constructor( orm:Orm ){
-        this.orm = orm
-    }
-
+    orm!: Orm
 
     async store(
         change: Change,

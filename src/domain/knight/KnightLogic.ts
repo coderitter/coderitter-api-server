@@ -11,18 +11,14 @@ import { KnightStoreValidator, KnightDeleteValidator } from './validators'
 let log = new Log('KnightLogic.ts')
 
 export default class KnightLogic {
-    orm: Orm
-
-    constructor(orm: Orm){
-        this.orm = orm
-    }
+    orm!: Orm
 
     async store(knight: Knight, tx: MariaTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('store')
         l.param('knight', knight)
 
         return tx.runInTransaction(async () => {
-            let validator = new KnightStoreValidator()
+            let validator = new KnightStoreValidator(this, tx)
             let misfits = await validator.validate(knight)
             l.dev('Validation yields the following misfits', misfits)
 

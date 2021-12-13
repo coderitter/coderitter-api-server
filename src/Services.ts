@@ -37,8 +37,8 @@ export default class Services {
 
     orm = new Orm(schema, 'maria')
 
-    changeLogic = new ChangeLogic(this.orm)
-    knightLogic = new KnightLogic(this.orm)
+    changeLogic = new ChangeLogic()
+    knightLogic = new KnightLogic()
 
     async start() {
         log.admin('Starting services...')
@@ -50,7 +50,10 @@ export default class Services {
         this.startApis()
     }
 
-    inject() {}
+    inject() {
+        this.knightLogic.orm = this.orm
+        this.changeLogic.orm = this.orm
+    }
 
     async startDb() {
         this.pool = mariadb.createPool(this.config.db)
