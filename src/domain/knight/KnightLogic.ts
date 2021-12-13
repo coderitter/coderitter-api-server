@@ -14,10 +14,6 @@ export default class KnightLogic {
 
     orm!: Orm
 
-    // constructor(orm:Orm){
-    //     this.orm = orm
-    // }
-
     async read(criteria: Criteria = {}, tx: PgTransaction): Promise<EntitiesResult<Knight>> {
         let l = log.mt('read')
         l.param('criteria', criteria)
