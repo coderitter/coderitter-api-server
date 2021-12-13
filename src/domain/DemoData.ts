@@ -2,7 +2,7 @@ import { Log } from 'knight-log'
 import { MariaTransaction } from 'knight-maria-transaction'
 import { Pool } from 'mariadb'
 
-import Knight, { Adress } from './knight/Knight'
+import Knight, { Addres } from './knight/Knight'
 import KnightLogic from './knight/KnightLogic'
 
 let log = new Log('DemoData.ts')
@@ -21,15 +21,15 @@ export default class DemoData {
 
         let tx = new MariaTransaction(this.pool)
 
-        let lAdress = new Adress('Gardenstreet', '42c', '12345', 'Gardencity', 'Gardencountry')
+        let lAddres = new Addres('Gardenstreet', '42c', '12345', 'Gardencity', 'Gardencountry')
 
         let luisa = new Knight({
             name: 'Luisa',
-            adress: lAdress
+            addres: lAddres
         })
 
         log.admin('luisa', luisa)
-        let result = await this.knightLogic.create(luisa, tx)
+        let result = await this.knightLogic.store(luisa, tx)
         log.admin('created knight', result)
 
     }

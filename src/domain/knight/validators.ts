@@ -1,19 +1,19 @@
 import { MariaTransaction } from 'knight-maria-transaction'
 import { Absent, Exists, Max, Required, TypeOf, Validator } from 'knight-validation'
 import KnightLogic from './KnightLogic'
-import Knight, { Adress } from './Knight'
+import Knight, { Addres } from './Knight'
 
 export class KnightValidator extends Validator {
 
-    constructor(tx: MariaTransaction) {
+    constructor() {
         super()
 
         this.add('name', new Required)
         this.add('name', new TypeOf('string'))
         this.add('name', new Max(40))
 
-        this.add('adress', new Required)
-        this.add('adress', new TypeOf(Adress))
+        this.add('addres', new Required)
+        this.add('addres', new TypeOf(Addres))
     }
 }
 
@@ -34,23 +34,12 @@ export class KnightIdValidator extends Validator {
     }
 }
 
-export class KnightCreateValidator extends Validator {
+export class KnightStoreValidator extends Validator {
 
-    constructor(tx: MariaTransaction) {
+    constructor() {
         super()
 
-        this.add('id', new Absent)
-        this.add(new KnightValidator(tx))
-    }
-}
-
-export class KnightUpdateValidator extends Validator {
-
-    constructor(knightLogic: KnightLogic, tx: MariaTransaction) {
-        super()
-
-        this.add(new KnightIdValidator(knightLogic, tx))
-        this.add(new KnightValidator(tx))
+        this.add(new KnightValidator())
     }
 }
 
