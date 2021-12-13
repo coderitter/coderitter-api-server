@@ -1,4 +1,4 @@
-import { ReadCriteria } from 'knight-criteria'
+import { Criteria } from 'knight-criteria'
 import { Log } from 'knight-log'
 import Change from './Change'
 
@@ -6,12 +6,12 @@ let log = new Log('ChangeLogic.ts')
 
 export default class ChangeLogic {
 
-    async create(change: Change): Promise<void> {
-        let l = log.mt('create')
+    async store(change: Change): Promise<void> {
+        let l = log.mt('store')
         l.param('change', change)
     }
 
-    async read(criteria: ReadCriteria = {}): Promise<void> {
+    async read(criteria: Criteria = {}): Promise<void> {
         let l = log.mt('read')
         l.param('criteria', criteria)
     }

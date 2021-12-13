@@ -1,6 +1,6 @@
 # Coderitter API Architecture
 
-<img src="./readmeFiles/coderitterApi.png" alt="My cool logo"/>
+<img src="./readmeFiles/coderitterApi.png" alt="Coderitter Architecture"/>
 
 The Coderitter API Architecture is a cloud application architecture which emphasizes programming instead of configuring. It is not a framework but a guidance on how to program.
 
