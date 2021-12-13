@@ -1,9 +1,9 @@
 import { Result } from 'coderitter-api-remote-method-call'
-import { ReadCriteria } from 'knight-criteria'
-import { create, read } from 'knight-orm'
+import { Criteria } from 'knight-criteria'
+import { Orm } from 'knight-orm'
 import { PgTransaction } from 'knight-pg-transaction'
 import { EntitiesResult, EntityResult } from '../api'
-import schema from '../DbSchema'
+import { schema } from '../DbSchema'
 import { txQuery } from '../txQuery'
 import { Log } from 'knight-log'
 import Change from './Change'
@@ -13,7 +13,13 @@ let log = new Log('ChangeLogic.ts')
 
 export default class ChangeLogic {
 
-    async create(change: Change, tx: PgTransaction): Promise<EntityResult<Change>> {
+    orm: Orm
+
+    constructor(orm:Orm){
+        this.orm = orm
+    }
+
+    async store(change: Change, tx: PgTransaction): Promise<EntityResult<Change>> {
         let l = log.mt('create')
         l.param('change', change)
 
@@ -27,18 +33,18 @@ export default class ChangeLogic {
                 return Result.misfits(misfits) as any
             }
 
-            let createdChange = await create(schema, 'change', 'postgres', txQuery(tx), change)
+            let createdChange = await this.orm.store(txQuery(tx), Change, change)
 
             return new EntityResult(createdChange)
         })
     }
 
-    async read(criteria: ReadCriteria = {}, tx: PgTransaction): Promise<EntitiesResult<Change>> {
+    async read(criteria: Criteria = {}, tx: PgTransaction): Promise<EntitiesResult<Change>> {
         let l = log.mt('read')
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let changes: Change[] = await read(schema, 'change', 'postgres', txQuery(tx), criteria)
+            let changes: Change[] = await this.orm.read(txQuery(tx), Change, criteria)
 
             l.dev('changes', changes)
             return new EntitiesResult(changes)

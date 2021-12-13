@@ -21,9 +21,8 @@ export class ChangeSendingTransaction extends PgTransaction {
     }
 }
 
-export function txQuery(tx: PgTransaction): (sqlString: string, values?: any[]) => Promise<any[]> {
-    return async (sqlString: string, values?: any[]) => {
-        let result = await tx.query(sqlString, values)
-        return result.rows
+export function txQuery(tx: PgTransaction): (sqlString: string, values?: any[]) => Promise<any> {
+    return async (sqlString: string, values?: any) => {
+        return tx.query(sqlString, values)
     }
 }

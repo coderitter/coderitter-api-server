@@ -18,7 +18,7 @@ export default class DemoData {
         this.knightLogic = knightLogic
     }
 
-    async create() {
+    async store() {
         log.admin('Creating demo data...')
 
         let tx = new PgTransaction(this.pool)
@@ -31,7 +31,7 @@ export default class DemoData {
         })
 
         log.admin('luisa', luisa)
-        let result = await this.knightLogic.create(luisa, tx)
+        let result = await this.knightLogic.store(luisa, tx)
         log.admin('created knight', result)
 
     }

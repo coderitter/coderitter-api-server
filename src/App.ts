@@ -9,7 +9,7 @@ class App {
         await Services.get().start()
         await Services.get().dbMigration.migrate()
 
-        //await Services.get().demoData.create()
+        await Services.get().demoData.store()
     }
 }
 

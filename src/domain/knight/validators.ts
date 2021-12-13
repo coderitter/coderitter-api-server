@@ -5,7 +5,7 @@ import Knight, { Adress } from './Knight'
 
 export class KnightValidator extends Validator {
 
-    constructor(tx: PgTransaction) {
+    constructor() {
         super()
 
         this.add('name', new Required)
@@ -34,23 +34,12 @@ export class KnightIdValidator extends Validator {
     }
 }
 
-export class KnightCreateValidator extends Validator {
+export class KnightStoreValidator extends Validator {
 
-    constructor(tx: PgTransaction) {
+    constructor() {
         super()
 
-        this.add('id', new Absent)
-        this.add(new KnightValidator(tx))
-    }
-}
-
-export class KnightUpdateValidator extends Validator {
-
-    constructor(knightLogic: KnightLogic, tx: PgTransaction) {
-        super()
-
-        this.add(new KnightIdValidator(knightLogic, tx))
-        this.add(new KnightValidator(tx))
+        this.add(new KnightValidator())
     }
 }
 
