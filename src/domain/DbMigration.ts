@@ -35,7 +35,7 @@ export default class DbMigration extends PostgresMigration {
             create table knight(
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(40),
-                adress VARCHAR(200)
+                address VARCHAR(200)
             );`)
 
         await this.increaseVersion()

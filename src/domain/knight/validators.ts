@@ -1,7 +1,7 @@
 import { PgTransaction } from 'knight-pg-transaction'
 import { Absent, Exists, Max, Required, TypeOf, Validator } from 'knight-validation'
 import KnightLogic from './KnightLogic'
-import Knight, { Adress } from './Knight'
+import Knight, { Address } from './Knight'
 
 export class KnightValidator extends Validator {
 
@@ -12,8 +12,8 @@ export class KnightValidator extends Validator {
         this.add('name', new TypeOf('string'))
         this.add('name', new Max(40))
 
-        this.add('adress', new Required)
-        this.add('adress', new TypeOf(Adress))
+        this.add('address', new Required)
+        this.add('address', new TypeOf(Address))
     }
 }
 

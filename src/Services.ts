@@ -40,8 +40,8 @@ export default class Services {
 
     orm = new Orm(schema, 'postgres')
 
-    changeLogic = new ChangeLogic(this.orm)
-    knightLogic = new KnightLogic(this.orm)
+    changeLogic = new ChangeLogic()
+    knightLogic = new KnightLogic()
 
     async start() {
         log.admin('Starting services...')
@@ -54,6 +54,9 @@ export default class Services {
     }
 
     inject() {
+        this.knightLogic.orm = this.orm
+        this.changeLogic.orm = this.orm
+
     }
 
     async startDb() {
