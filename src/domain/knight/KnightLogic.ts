@@ -23,7 +23,7 @@ export default class KnightLogic {
             l.dev('created knight', result)
         }
         else{
-            l.admin('demo data already exists.. skipping..')
+            l.admin('knight already exists.. skipping..')
         }
     }
 
