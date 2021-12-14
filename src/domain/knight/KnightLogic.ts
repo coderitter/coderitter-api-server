@@ -26,12 +26,26 @@ export default class KnightLogic {
         })
     }
 
+    async storeIfNotAlreadyExist(knight: Knight ,tx: PgTransaction){
+        let l = log.mt('storeIfNotAlreadyExist')
+        l.param('knight', knight)
+
+        let alreadyExist = await this.read(knight, tx)
+        if(alreadyExist.entities.length === 0){
+            let result = await this.store(knight, tx)
+            log.admin('created knight', result)
+        }
+        else{
+            log.admin('demo data already exists.. skipping..')
+        }
+    }
+
     async store(knight: Knight, tx: PgTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('store')
         l.param('knight', knight)
 
         return tx.runInTransaction(async () => {
-            let validator = new KnightStoreValidator()
+            let validator = new KnightStoreValidator(this, tx)
             let misfits = await validator.validate(knight)
             l.dev('Validation yields the following misfits', misfits)
 
@@ -52,9 +66,9 @@ export default class KnightLogic {
         l.param('parameter', criteria)
     
         return tx.runInTransaction(async () => {
-            let cnt = await this.orm.count(txQuery(tx), Knight, criteria)
-            l.dev('count', cnt)
-            return new CountResult(cnt)
+            let count = await this.orm.count(txQuery(tx), Knight, criteria)
+            l.dev('count', count)
+            return new CountResult(count)
         })
     }
     

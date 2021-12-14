@@ -39,6 +39,6 @@ export default class DbMigration extends PostgresMigration {
             );`)
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add change table)')
+        log.admin('Migrated to version 1 (Add change table and table knight)')
     }
 }

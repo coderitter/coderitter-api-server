@@ -17,28 +17,16 @@ export class KnightValidator extends Validator {
     }
 }
 
-export class KnightIdValidator extends Validator {
-
-    knightLogic: KnightLogic
+export class KnightStoreValidator extends Validator {
 
     constructor(knightLogic: KnightLogic, tx: PgTransaction) {
         super()
-        this.knightLogic = knightLogic
 
-        this.add('id', new Required)
         this.add('id', new TypeOf('number'))
         this.add('id', new Exists(async (knight: Knight) => {
-            let result = await this.knightLogic.count({ id : knight.id }, tx)
+            let result = await knightLogic.count({ id : knight.id }, tx)
             return result.count == 1
         }))
-    }
-}
-
-export class KnightStoreValidator extends Validator {
-
-    constructor() {
-        super()
-
         this.add(new KnightValidator())
     }
 }
@@ -48,6 +36,11 @@ export class KnightDeleteValidator extends Validator {
     constructor(knightLogic: KnightLogic, tx: PgTransaction) {
         super()
 
-        this.add(new KnightIdValidator(knightLogic, tx))
+        this.add('id', new Required)
+        this.add('id', new TypeOf('number'))
+        this.add('id', new Exists(async (knight: Knight) => {
+            let result = await knightLogic.count({ id : knight.id }, tx)
+            return result.count == 1
+        }))
     }
 }

@@ -32,6 +32,10 @@ export default class Knight {
     constructor(data?: Partial<Knight>) {
         Object.assign(this, data)
     }
+
+    getCriteria(){
+        
+    }
 }
 
 
