@@ -13,6 +13,20 @@ let log = new Log('KnightLogic.ts')
 export default class KnightLogic {
     orm!: Orm
 
+    async storeIfNotAlreadyExist(knight: Knight, tx: MariaTransaction){
+        let l = log.mt('storeIfNotAlreadyExist')
+        l.param('knight', knight)
+
+        let alreadyExist = await this.read(knight, tx)
+        if(alreadyExist.entities.length === 0){
+            let result = await this.store(knight, tx)
+            l.dev('created knight', result)
+        }
+        else{
+            l.admin('demo data already exists.. skipping..')
+        }
+    }
+
     async store(knight: Knight, tx: MariaTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('store')
         l.param('knight', knight)
@@ -51,9 +65,9 @@ export default class KnightLogic {
         l.param('parameter', criteria)
     
         return tx.runInTransaction(async () => {
-            let cnt = await this.orm.count(txQuery(tx), Knight, criteria)
-            l.dev('count', cnt)
-            return new CountResult(cnt)
+            let count = await this.orm.count(txQuery(tx), Knight, criteria)
+            l.dev('count', count)
+            return new CountResult(count)
         })
     }
     

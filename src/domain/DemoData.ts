@@ -21,21 +21,12 @@ export default class DemoData {
 
         let tx = new MariaTransaction(this.pool)
 
-        let lAddress = new Address('Gardenstreet', '42c', '12345', 'Gardencity', 'Gardencountry')
-
         let luisa = new Knight({
             name: 'Luisa',
-            address: lAddress
+            address: new Address('Gardenstreet', '42c', '12345', 'Gardencity', 'Gardencountry')
         })
 
-        let alreadyExist = await this.knightLogic.read({name: 'Luisa'}, tx)
-        if(alreadyExist.entities.length === 0){
-            let result = await this.knightLogic.store(luisa, tx)
-            log.admin('created knight', result)
-        }
-        else{
-            log.admin('demo data already exists.. skipping..')
-        }
+        this.knightLogic.storeIfNotAlreadyExist(luisa, tx)
         
     }
 }
