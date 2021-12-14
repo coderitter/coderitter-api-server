@@ -36,7 +36,7 @@ export default class KnightLogic {
             log.admin('created knight', result)
         }
         else{
-            log.admin('demo data already exists.. skipping..')
+            log.admin('knight already exists.. skipping..')
         }
     }
 
