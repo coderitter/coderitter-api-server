@@ -38,8 +38,6 @@ The Coderitter API Architecture is a cloud application architecture which emphas
 - set the default branch in your project to "master"
 - delete the other branch 
 
-### create a new Database
-
 As example database, the database knight is given. 
 
 Start with creating an new folder in `src/domain/<newDatabase>`. In this folder you now create at least threee files: `NewDatabase.ts`, `NewDatabaseLogic`, `validator.ts`. If ypou need, you also can create an `api.ts`, if you need a few new datatypes, which aren't already in `src/domain/api.ts`. 

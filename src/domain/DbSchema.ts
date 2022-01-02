@@ -1,69 +1,36 @@
-import { fromJson, toJson } from 'knight-json'
 import { Schema } from 'knight-orm'
-import instantiator from '../Instantiator'
 import Change from './change/Change'
 import Knight from './knight/Knight'
 
-export default {
-    'onchange': {
-        columns: {
-            'version': { property: 'version', id: true },
-            'entityname': 'entityName',
-            'method': 'method',
-            'entity': 'entity'
-        },
-        rowToInstance: (row: any) => {
-            let change = new Change
 
-            change.version = row['version']
-            change.entityName = row['entityname']
-            change.method =
-                row['method'] != null
-                    ? JSON.parse(row['method'])
-                    : row['method']
+export const schema = new Schema
 
-            if (row['entity'] != null) {
-                change.entity = fromJson(row['entity'], {
-                    instantiator: instantiator
-                })
-            }
-
-            return change
-        },
-        instanceToRow: (change: Change) => {
-            return {
-                version: change.version,
-                entityname: change.entityName,
-                method:
-                    change.method != undefined
-                        ? JSON.stringify(change.method)
-                        : undefined,
-                entity: toJson(change.entity)
-            }
-        }
+schema.addTable('onchange',{
+    columns:{
+        'version': { property:'version', primaryKey:true, generated:true },
+        'entityname': 'entityName',
+        'method': 'method',
+        'entity': 'entity'
     },
-    'knight':{
-        columns:{
-            'id': {property: 'id', id: true},
-            'name': 'name',
-            'adress': 'adress'
-        },
-        rowToInstance: (row: any) => {
-            let knight = new Knight
+    relationships: {},
+    newInstance: () => new Change
+}
+)
 
-            knight.id = row['id']
-            knight.name = row['name']
-            knight.adress = row['adress'] != null ? JSON.parse(row['adress']) : row['adress']
+schema.addTable('knight', {
+    columns:{
+        'id': {property: 'id', primaryKey: true, generated: true },
+        'name': 'name',
+        'address': 'address'
+    },
+    relationships: {},
+    newInstance: () => new Knight,
+    instanceToRow: (knight: Knight, row: any)=>{
+        row.address = JSON.stringify(knight.address)
+    },
+    rowToInstance: (row: any, knight: Knight) =>{
+        knight.address = JSON.parse(row.address)
+    } 
+})
 
-            return knight
-        },
-        instanceToRow: (knight: Knight) => {
-            return {
-                id: knight.id,
-                name: knight.name,
-                adress: knight.adress != undefined ? JSON.stringify(knight.adress) : undefined
-            }
-        }
-    }
-
-} as Schema
+schema.check()

@@ -1,10 +1,9 @@
 import { Result } from 'coderitter-api-remote-method-call'
-import { ReadCriteria } from 'knight-criteria'
+import { Criteria  } from 'knight-criteria' //readCriteria
 import { Log } from 'knight-log'
-import { create, read } from 'knight-orm'
+import { Orm } from 'knight-orm'
 import { MariaTransaction } from 'knight-maria-transaction'
 import { EntitiesResult, EntityResult } from '../api'
-import schema from '../DbSchema'
 import { txQuery } from '../txQuery'
 import Change from './Change'
 import { ChangeValidator } from './validators'
@@ -12,7 +11,9 @@ import { ChangeValidator } from './validators'
 let log = new Log('ChangeLogic.ts')
 
 export default class ChangeLogic {
-    async create(
+    orm!: Orm
+
+    async store(
         change: Change,
         tx: MariaTransaction
     ): Promise<EntityResult<Change>> {
@@ -29,33 +30,21 @@ export default class ChangeLogic {
                 return Result.misfits(misfits) as any
             }
 
-            let createdChange = await create(
-                schema,
-                'change',
-                'mysql',
-                txQuery(tx),
-                change
-            )
+            let createdChange = await this.orm.store(txQuery(tx), Change, change)
 
             return new EntityResult(createdChange)
         })
     }
 
     async read(
-        criteria: ReadCriteria = {},
+        criteria: Criteria = {},
         tx: MariaTransaction
     ): Promise<EntitiesResult<Change>> {
         let l = log.mt('read')
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let changes: Change[] = await read(
-                schema,
-                'change',
-                'mysql',
-                txQuery(tx),
-                criteria
-            )
+            let changes: Change[] = await this.orm.read(txQuery(tx), Change, criteria)
 
             l.dev('changes', changes)
             return new EntitiesResult(changes)

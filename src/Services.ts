@@ -12,6 +12,8 @@ import DbMigration from './domain/DbMigration'
 import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
 import KnightLogic from './domain/knight/KnightLogic'
+import { Orm } from 'knight-orm'
+import { schema } from './domain/DbSchema'
 
 let log = new Log('Services.ts')
 
@@ -33,6 +35,8 @@ export default class Services {
     httpApi!: HttpApi
     webSocketApi!: WebSocketApi
 
+    orm = new Orm(schema, 'maria')
+
     changeLogic = new ChangeLogic()
     knightLogic = new KnightLogic()
 
@@ -46,7 +50,10 @@ export default class Services {
         this.startApis()
     }
 
-    inject() {}
+    inject() {
+        this.knightLogic.orm = this.orm
+        this.changeLogic.orm = this.orm
+    }
 
     async startDb() {
         this.pool = mariadb.createPool(this.config.db)

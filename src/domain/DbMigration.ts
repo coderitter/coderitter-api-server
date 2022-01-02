@@ -23,27 +23,26 @@ export default class DbMigration extends MariaMigration {
 
         try {
             await this.pool.query(`
-      create table onchange(
-          version int auto_increment,
-          entityName varchar(100),
-          method varchar(20),
-          entity text,
-          description text,
-          primary key (version)
-        );`)
+                create table onchange(
+                    version INT AUTO_INCREMENT PRIMARY KEY,
+                    entityName VARCHAR(100),
+                    method VARCHAR(20),
+                    entity TEXT,
+                    description TEXT
+            );`)
 
             await this.pool.query(`
-        create table knight(
-            id int auto_increment primary key,
-            name varchar(40),
-            adress varchar(200)
-          );`)
+                create table knight(
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    name VARCHAR(40),
+                    address VARCHAR(200)
+                );`)
         }
         catch (e) {
             throw new Error(<any>e)
         }
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add onchange and knight table)')
+        log.admin('Migrated to version 1 (Add change and knight table)')
     }
 }
