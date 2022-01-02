@@ -11,6 +11,8 @@ import DbMigration from './domain/DbMigration'
 import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
 import KnightLogic from './domain/knight/KnightLogic'
+import { Orm } from 'knight-orm'
+import { schema } from './domain/DbSchema'
 
 let log = new Log('Services.ts')
 
@@ -36,8 +38,10 @@ export default class Services {
     httpApi!: HttpApi
     webSocketApi!: WebSocketApi
 
-    changeLogic = new ChangeLogic
-    knightLogic = new KnightLogic
+    orm = new Orm(schema, 'postgres')
+
+    changeLogic = new ChangeLogic()
+    knightLogic = new KnightLogic()
 
     async start() {
         log.admin('Starting services...')
@@ -50,6 +54,9 @@ export default class Services {
     }
 
     inject() {
+        this.knightLogic.orm = this.orm
+        this.changeLogic.orm = this.orm
+
     }
 
     async startDb() {
