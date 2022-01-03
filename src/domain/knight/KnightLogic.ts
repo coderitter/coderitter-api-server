@@ -63,14 +63,14 @@ export default class KnightLogic {
     async count(criteria: Criteria = {}, tx: MariaTransaction): Promise<CountResult> {
         let l = log.mt('count')
         l.param('parameter', criteria)
-    
+
         return tx.runInTransaction(async () => {
             let count = await this.orm.count(txQuery(tx), Knight, criteria)
             l.dev('count', count)
             return new CountResult(count)
         })
     }
-    
+
 
     async delete(knight: Partial<Knight>, tx: MariaTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('delete')

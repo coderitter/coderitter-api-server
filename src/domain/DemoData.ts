@@ -27,6 +27,6 @@ export default class DemoData {
         })
 
         this.knightLogic.storeIfNotAlreadyExist(luisa, tx)
-        
+
     }
 }

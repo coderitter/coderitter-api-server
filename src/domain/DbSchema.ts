@@ -30,7 +30,7 @@ schema.addTable('knight', {
     },
     rowToInstance: (row: any, knight: Knight) =>{
         knight.address = JSON.parse(row.address)
-    } 
+    }
 })
 
 schema.check()

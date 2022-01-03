@@ -7,7 +7,7 @@ let log = new Log('transactions.ts')
 export class ChangeSendingTransaction extends MariaTransaction {
 
     versionBefore?: number
-  
+
     constructor(pool: Pool) {
         super(pool)
 

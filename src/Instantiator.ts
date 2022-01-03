@@ -16,7 +16,7 @@ export default {
     Change: () => new Change(),
 
     // knight
-    Knight: () => new Knight(),   
+    Knight: () => new Knight(),
 
     // Common results
     Result: () => new Result(),

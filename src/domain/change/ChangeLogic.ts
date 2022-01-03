@@ -1,5 +1,5 @@
 import { Result } from 'coderitter-api-remote-method-call'
-import { Criteria  } from 'knight-criteria' //readCriteria
+import { Criteria } from 'knight-criteria' //readCriteria
 import { Log } from 'knight-log'
 import { Orm } from 'knight-orm'
 import { MariaTransaction } from 'knight-maria-transaction'

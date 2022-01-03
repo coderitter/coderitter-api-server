@@ -28,12 +28,11 @@ export default class Knight {
     id?: number
     name?: string
     address?: Address
-   
+
     constructor(data?: Partial<Knight>) {
         Object.assign(this, data)
     }
 }
 
 
-  
-  
+
