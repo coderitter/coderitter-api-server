@@ -17,7 +17,7 @@ import { schema } from './domain/DbSchema'
 let log = new Log('Services.ts')
 
 /**
- * 
+ *
  */
 export default class Services {
 

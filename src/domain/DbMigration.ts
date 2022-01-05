@@ -18,7 +18,7 @@ export default class DbMigration extends PostgresMigration {
     async version1() {
         if (await this.getVersion() >= 1) {
             log.admin('Skipping version 1')
-            return 
+            return
         }
 
         await this.pool.query(`
