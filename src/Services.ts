@@ -12,12 +12,12 @@ let log = new Log('Services.ts')
 
 export default class Services {
 
-    private static instance: Services = new Services()
+    private static _instance: Services = new Services()
 
     static get(): Services {
-        return Services.instance
+        return Services._instance
     }
-  
+
     config = getConfigByArgvOrEnvOrDefault()
 
     httpServer!: http.Server
@@ -47,10 +47,10 @@ export default class Services {
     }
 
     async startServer() {
-    // HTTP Server
+        // HTTP Server
         this.httpServer = http.createServer()
 
-        // WebSocket Server          
+        // WebSocket Server
         this.webSocketServer = new WebSocket.Server({
             server: this.httpServer
         }, () => {
@@ -82,12 +82,12 @@ export default class Services {
 
         if (this.httpServer) {
             this.httpServer.close()
-            log.admin('Stopped HTTP server')  
+            log.admin('Stopped HTTP server')
         }
 
         if (this.webSocketServer) {
             this.webSocketServer.close()
-            log.admin('Stopped WebSocket server')  
+            log.admin('Stopped WebSocket server')
         }
 
         Log.watcher?.close()

@@ -3,8 +3,8 @@ import Change from './change/Change'
 
 export const schema = new Schema
 
-schema.addTable('change',{
-    columns:{
+schema.addTable('change', {
+    columns: {
         'version': { property: 'version', primaryKey: true, generated: true },
         'entityname': 'entityName',
         'method': 'method',

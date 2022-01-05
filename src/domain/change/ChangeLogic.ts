@@ -17,6 +17,6 @@ export default class ChangeLogic {
     }
 
     async latestVersion(): Promise<void> {
-        let l = log.mt('latestVersion')
+        log.mt('latestVersion')
     }
 }
