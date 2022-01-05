@@ -10,14 +10,14 @@ let databaseName = 'coderitter'
  */
 export const dev = {
 
-    db: <PoolConfig> {
+    db: <PoolConfig>{
         host: 'db',
         user: databaseName,
         password: '1234',
         database: databaseName
     },
 
-    httpApi: <HttpApiConfig> {
+    httpApi: <HttpApiConfig>{
         port: 3000
     }
 }
@@ -27,7 +27,7 @@ export const dev = {
  */
 export const test = merge(dev, {
 
-    db: <PoolConfig> {
+    db: <PoolConfig>{
         host: 'dbtest',
         user: databaseName + '_test',
         database: databaseName + '_test'
@@ -39,7 +39,7 @@ export const test = merge(dev, {
  */
 export const prod = merge(dev, {
 
-    db: <PoolConfig> {
+    db: <PoolConfig>{
         host: 'db',
         user: databaseName + '_prod',
         database: databaseName + '_prod'

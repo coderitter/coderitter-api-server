@@ -9,7 +9,7 @@ let log = new Log('ChangeSendingTransaction.ts')
 export class ChangeSendingTransaction extends PgTransaction {
 
     versionBefore?: number
-  
+
     constructor(pool: Pool, changeLogic: ChangeLogic, webSocketApi: WebSocketApi) {
         super(pool)
 

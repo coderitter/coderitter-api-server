@@ -1,6 +1,6 @@
 import { Result } from 'coderitter-api-remote-method-call'
 import { Criteria } from 'knight-criteria'
-import { Log } from 'knight-log'
+import { Log } from 'knight-log'
 import { Orm } from 'knight-orm'
 import Knight from './Knight'
 import { PgTransaction } from 'knight-pg-transaction'
@@ -26,16 +26,16 @@ export default class KnightLogic {
         })
     }
 
-    async storeIfNotAlreadyExist(knight: Knight ,tx: PgTransaction){
+    async storeIfNotAlreadyExist(knight: Knight, tx: PgTransaction) {
         let l = log.mt('storeIfNotAlreadyExist')
         l.param('knight', knight)
 
         let alreadyExist = await this.read(knight, tx)
-        if(alreadyExist.entities.length === 0){
+        if (alreadyExist.entities.length === 0) {
             let result = await this.store(knight, tx)
             log.admin('created knight', result)
         }
-        else{
+        else {
             log.admin('knight already exists.. skipping..')
         }
     }
@@ -54,7 +54,7 @@ export default class KnightLogic {
                 return Result.misfits(misfits) as any
             }
 
-            let updated = await this.orm.store( txQuery(tx), Knight, knight) as Knight
+            let updated = await this.orm.store(txQuery(tx), Knight, knight) as Knight
             l.dev('updated', updated)
 
             return new EntityResult(updated)
@@ -64,14 +64,14 @@ export default class KnightLogic {
     async count(criteria: Criteria = {}, tx: PgTransaction): Promise<CountResult> {
         let l = log.mt('count')
         l.param('parameter', criteria)
-    
+
         return tx.runInTransaction(async () => {
             let count = await this.orm.count(txQuery(tx), Knight, criteria)
             l.dev('count', count)
             return new CountResult(count)
         })
     }
-    
+
 
     async delete(knight: Partial<Knight>, tx: PgTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('delete')

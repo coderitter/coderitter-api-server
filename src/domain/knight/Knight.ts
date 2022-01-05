@@ -4,15 +4,15 @@ export class Address {
     plz: string
     city: string
     country: string
-    constructor(street: string, houseNumber: string, plz: string, city: string, country: string){
-        this.street= street
-        this.houseNumber =houseNumber
+    constructor(street: string, houseNumber: string, plz: string, city: string, country: string) {
+        this.street = street
+        this.houseNumber = houseNumber
         this.plz = plz
         this.city = city
         this.country = country
     }
 
-    toJson(){
+    toJson() {
         return {
             'street': this.street,
             'housenumber': this.houseNumber,
@@ -28,12 +28,11 @@ export default class Knight {
     id?: number
     name?: string
     address?: Address
-   
+
     constructor(data?: Partial<Knight>) {
         Object.assign(this, data)
     }
 }
 
 
-  
-  
+
