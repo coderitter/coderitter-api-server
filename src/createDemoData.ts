@@ -1,4 +1,4 @@
-import Services from './src/Services'
+import Services from './Services'
 
 async function run() {
     await Services.get().startDb()

@@ -7,14 +7,13 @@
     "startTs": "ts-node src/App.ts",
     "test": "TS_NODE_PROJECT='./tsconfig.test.json' mocha -r ts-node/register \"test/**/*.test.ts\"",
     "build": "rm -rf app && tsc",
-    "demoData": "ts-node createDemoData.ts",
+    "demoData": "ts-node src/createDemoData.ts",
     "lint": "eslint . --ext .ts",
     "fix": "eslint . --fix --ext .ts"
   },
   "dependencies": {
     "@types/pg": "^7.14.11",
     "@types/ws": "^6.0.4",
-    "coderitter-api-postonly-request": "^1.0.2",
     "coderitter-api-remote-method-api": "^6.0.0",
     "coderitter-api-remote-method-call": "^4.0.1",
     "knight-change": "^1.0.0",

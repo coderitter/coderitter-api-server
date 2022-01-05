@@ -20,12 +20,11 @@ export default class Api extends RemoteMethodApi {
     }
 
     tx(): PgTransaction {
-        let l = log.mt('tx')
         return new PgTransaction(this.pool)
     }
 
     chgTx(): ChangeSendingTransaction {
-        let l = log.mt('chgTx')
+        log.fn('chgTx')
         return new ChangeSendingTransaction(this.pool, Services.get().changeLogic, this.webSocketApi)
     }
 }

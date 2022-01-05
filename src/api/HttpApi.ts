@@ -9,10 +9,10 @@ let log = new Log('HttpApi.ts')
 /**
  * It receives the data directly from the HTTP server and
  * uses the Api object to execute the remote method call.
- * 
+ *
  * Also it converts the incoming JSON with the help of knight-json
  * to instances of the original classes.
- * 
+ *
  * And it converts the outgoing object with the help of knight-json
  * to a JSON string which contains the class information.
  */
@@ -20,21 +20,20 @@ export default class HttpApi {
 
     server!: http.Server
     api: RemoteMethodApi
-    instantiator: {[ className: string ]: () => any }
+    instantiator: { [className: string]: () => any }
     config: HttpApiConfig = {}
 
-    constructor(api: RemoteMethodApi, instantiator: {[ className: string ]: () => any }, config?: HttpApiConfig) {
+    constructor(api: RemoteMethodApi, instantiator: { [className: string]: () => any }, config?: HttpApiConfig) {
         this.api = api
         this.instantiator = instantiator
         this.config = config || this.config
     }
-  
+
     /**
    * Adds a listener to the native Node HTTP server which accepts remote method calls.
    */
     async start(): Promise<void> {
         this.server.addListener('request', (request, response) => {
-            let l = log.fn('handler')
             if (request.url == '/api_v1') {
                 let data = ''
 
@@ -52,31 +51,36 @@ export default class HttpApi {
         })
 
         return new Promise<void>((resolve, reject) => {
-            this.server?.listen(this.config.port, () => {
-                log.admin('HTTP API started at ' + this.config.port)
-                resolve()
-            })
+            try {
+                this.server?.listen(this.config.port, () => {
+                    log.admin('HTTP API started at ' + this.config.port)
+                    resolve()
+                })
+            }
+            catch (error) {
+                reject(error)
+            }
         })
     }
 
     /**
-   * Handles a POSTonly HTTP style request. It tries to parse the received data as a JSON string, calls 
+   * Handles a POSTonly HTTP style request. It tries to parse the received data as a JSON string, calls
    * the remote method and sends back the result to the client.
-   * 
+   *
    * @param data The received data.
-   * @param request 
-   * @param response 
+   * @param request
+   * @param response
    */
     async handlePostOnlyRequest(data: any, request: http.IncomingMessage, response: http.ServerResponse) {
         let l = log.fn('handlePostOnlyRequest')
         l.param('request.url', request.url)
         l.param('data', data)
 
-        let result: Result|undefined = undefined
+        let result: Result | undefined = undefined
 
-        let remoteMethodCall: RemoteMethodCall|undefined = undefined
+        let remoteMethodCall: RemoteMethodCall | undefined = undefined
         try {
-            remoteMethodCall = <RemoteMethodCall> fromJsonObj(data, { instantiator: this.instantiator })
+            remoteMethodCall = <RemoteMethodCall>fromJsonObj(data, { instantiator: this.instantiator })
         }
         catch (e) {
             l.error('Could not parse the JSON containing the RemoteMethodCall')
@@ -84,9 +88,9 @@ export default class HttpApi {
         }
 
         l.dev('remoteMethodCall', remoteMethodCall)
-    
+
         // if the result is not already erroneous
-        if ((! result || result && ! result.isRemoteError()) && remoteMethodCall) {
+        if ((!result || result && !result.isRemoteError()) && remoteMethodCall) {
             l.admin('Calling method...')
             result = await this.api.callMethod(remoteMethodCall)
         }
@@ -115,5 +119,5 @@ export default class HttpApi {
 }
 
 export interface HttpApiConfig {
-  port?: number
+    port?: number
 }
