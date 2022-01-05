@@ -1,4 +1,4 @@
-import { Log } from 'knight-log'
+import { Log } from 'knight-log'
 import { MariaTransaction } from 'knight-maria-transaction'
 import { Pool } from 'mariadb'
 

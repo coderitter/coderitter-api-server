@@ -24,7 +24,7 @@ export class KnightStoreValidator extends Validator {
 
         this.add('id', new TypeOf('number'))
         this.add('id', new Exists(async (knight: Knight) => {
-            let result = await knightLogic.count({ id : knight.id }, tx)
+            let result = await knightLogic.count({ id: knight.id }, tx)
             return result.count == 1
         }))
         this.add(new KnightValidator())
@@ -39,7 +39,7 @@ export class KnightDeleteValidator extends Validator {
         this.add('id', new Required)
         this.add('id', new TypeOf('number'))
         this.add('id', new Exists(async (knight: Knight) => {
-            let result = await knightLogic.count({ id : knight.id }, tx)
+            let result = await knightLogic.count({ id: knight.id }, tx)
             return result.count == 1
         }))
     }

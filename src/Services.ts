@@ -18,10 +18,10 @@ import { schema } from './domain/DbSchema'
 let log = new Log('Services.ts')
 
 export default class Services {
-    private static instance: Services = new Services()
+    private static _instance: Services = new Services()
 
     static get(): Services {
-        return Services.instance
+        return Services._instance
     }
 
     config = getConfigByArgvOrEnvOrDefault()
@@ -77,11 +77,11 @@ export default class Services {
                 let address = this.webSocketServer.address() as any
                 log.admin(
                     'WebSocket server running at ' +
-                        address.address +
-                        ':' +
-                        address.port +
-                        ' - ' +
-                        address.family
+                    address.address +
+                    ':' +
+                    address.port +
+                    ' - ' +
+                    address.family
                 )
             }
         )

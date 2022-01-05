@@ -7,7 +7,7 @@
     "startTs": "ts-node src/App.ts",
     "test": "cross-env TS_NODE_PROJECT='./tsconfig.test.json' mocha -r ts-node/register \"test/**/*.test.ts\"",
     "build": "rm -rf app && tsc",
-    "demoData": "ts-node createDemoData.ts",
+    "demoData": "ts-node src/createDemoData.ts",
     "lint": "eslint . --ext .ts",
     "fix": "eslint . --fix --ext .ts"
   },

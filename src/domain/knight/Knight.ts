@@ -4,15 +4,15 @@ export class Address {
     plz: string
     city: string
     country: string
-    constructor(street: string, houseNumber: string, plz: string, city: string, country: string){
-        this.street= street
-        this.houseNumber =houseNumber
+    constructor(street: string, houseNumber: string, plz: string, city: string, country: string) {
+        this.street = street
+        this.houseNumber = houseNumber
         this.plz = plz
         this.city = city
         this.country = country
     }
 
-    toJson(){
+    toJson() {
         return {
             'street': this.street,
             'housenumber': this.houseNumber,

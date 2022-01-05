@@ -54,13 +54,13 @@ export default class HttpApi {
         })
 
         return new Promise<void>((resolve, reject) => {
-            try{
+            try {
                 this.server?.listen(this.config.port, () => {
                     log.admin('HTTP API started at ' + this.config.port)
                     resolve()
                 })
             }
-            catch(error){
+            catch (error) {
                 reject(error)
             }
         })
