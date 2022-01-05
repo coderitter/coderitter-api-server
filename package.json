@@ -14,7 +14,6 @@
   "dependencies": {
     "@types/mysql": "^2.15.19",
     "@types/ws": "^6.0.4",
-    "coderitter-api-postonly-request": "^1.0.2",
     "coderitter-api-remote-method-api": "^6.0.0",
     "coderitter-api-remote-method-call": "^4.0.1",
     "cross-env": "^7.0.3",

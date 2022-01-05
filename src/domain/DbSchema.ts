@@ -2,7 +2,6 @@ import { Schema } from 'knight-orm'
 import Change from './change/Change'
 import Knight from './knight/Knight'
 
-
 export const schema = new Schema
 
 schema.addTable('onchange', {

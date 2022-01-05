@@ -27,13 +27,13 @@ module.exports =
     "@typescript-eslint/consistent-type-definitions": [1, "interface"], //prefer interface , avoid type
     //"@typescript-eslint/explicit-function-return-type": [1, {"allowExpressions": true}],
     "@typescript-eslint/explicit-member-accessibility": [1, { "accessibility": "no-public" }],
-    "@typescript-eslint/member-delimiter-style": ["error", {
+    "@typescript-eslint/member-delimiter-style": [1, {
       "multiline": {
         "delimiter": "none",    // 'none' or 'semi' or 'comma'
         "requireLast": false
       }
     }],
-    "@typescript-eslint/naming-convention": ["error",
+    "@typescript-eslint/naming-convention": [1,
       { "selector": "default", "format": ["strictCamelCase"] },
       {
         "selector": "variable",
