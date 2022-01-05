@@ -23,7 +23,7 @@
     "knight-log": "^1.0.6",
     "knight-maria-migration": "^0.0.1",
     "knight-maria-transaction": "^0.0.1",
-    "knight-orm": "^0.2.0",
+    "knight-orm": "^0.3.0",
     "knight-validation": "^1.1.0",
     "mariadb": "^2.5.5",
     "ws": "^7.4.5"

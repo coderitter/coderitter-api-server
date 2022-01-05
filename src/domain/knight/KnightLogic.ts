@@ -53,7 +53,7 @@ export default class KnightLogic {
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let knights: Knight[] = await this.orm.read(txQuery(tx), Knight, criteria)
+            let knights: Knight[] = await this.orm.load(txQuery(tx), Knight, criteria)
             l.dev('knights', knights)
 
             return new EntitiesResult(knights)
