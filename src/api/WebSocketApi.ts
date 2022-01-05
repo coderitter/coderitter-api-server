@@ -31,7 +31,7 @@ export default class WebSocketApi {
 
                     if (data == 'pong') {
                         l.admin('Received pong...')
-                        ;(socket as any).isAlive = true
+                        ; (socket as any).isAlive = true
                     }
                     else {
                         l.admin('Received version number...')
@@ -42,9 +42,9 @@ export default class WebSocketApi {
                             l.error('Received version is not a number. Returning...')
                             return
                         }
-  
+
                         l.admin('Received version. Sending changes...')
-                        this.sendChanges(version, socket)  
+                        this.sendChanges(version, socket)
                     }
                 }
             })
@@ -75,7 +75,7 @@ export default class WebSocketApi {
                     continue
                 }
 
-                ;(client as any).isAlive = false
+                ; (client as any).isAlive = false
                 l.admin('Pinging client...')
                 client.send('ping')
             }
@@ -104,9 +104,9 @@ export default class WebSocketApi {
 
         let clients: WebSocket[]
         if (client != undefined) {
-            if (! (client as any).sendingChanges) {
+            if (!(client as any).sendingChanges) {
                 l.admin('Using single given WebSocket client...')
-                clients = [ client ]
+                clients = [client]
             }
             else {
                 l.admin('Client is already sending changes. Returning...')
@@ -122,10 +122,10 @@ export default class WebSocketApi {
                     l.admin('Client is already sending changes. Continuing...')
                     continue
                 }
-  
+
                 (client as any).sendingChanges = true
                 clients.push(client)
-            }  
+            }
         }
 
 
@@ -138,7 +138,7 @@ export default class WebSocketApi {
         for (let client of clients) {
             l.dev('client', (client as any)._socket._peername.address)
 
-            client.send(changesJson, (e: Error|undefined) => {
+            client.send(changesJson, (e: Error | undefined) => {
                 if (e != undefined) {
                     l.error(e)
                 }

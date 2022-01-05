@@ -1,7 +1,7 @@
-version: '3.7'
+version: '3.8'
 services:
   app:
-    image: node
+    image: node:16.13.1
     restart: always
     working_dir: '/hostdir'
     volumes:
