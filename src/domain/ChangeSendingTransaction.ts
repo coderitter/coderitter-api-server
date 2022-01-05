@@ -7,7 +7,9 @@ let log = new Log('ChangeSendingTransaction.ts')
 export class ChangeSendingTransaction {
 
     versionBefore?: number
-  
-    constructor( changeLogic: ChangeLogic, webSocketApi: WebSocketApi) {
+
+    constructor(changeLogic: ChangeLogic, webSocketApi: WebSocketApi) {
+        log.param('changeLogic', changeLogic)
+        log.param('webSocketApi', webSocketApi)
     }
 }

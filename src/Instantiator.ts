@@ -14,5 +14,5 @@ export default {
     'EntitiesVersionResult': () => new EntitiesVersionResult,
     'CreateOrGetResult': () => new CreateOrGetResult,
     'CountResult': () => new CountResult
-  
-} as {[ className: string ]: () => any }
+
+} as { [className: string]: () => any }
