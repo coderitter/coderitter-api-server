@@ -3,7 +3,6 @@ import { Criteria } from 'knight-criteria'
 import { Orm } from 'knight-orm'
 import { PgTransaction } from 'knight-pg-transaction'
 import { EntitiesResult, EntityResult } from '../api'
-import { schema } from '../DbSchema'
 import { txQuery } from '../txQuery'
 import { Log } from 'knight-log'
 import Change from './Change'
@@ -40,7 +39,7 @@ export default class ChangeLogic {
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let changes: Change[] = await this.orm.read(txQuery(tx), Change, criteria)
+            let changes: Change[] = await this.orm.load(txQuery(tx), Change, criteria)
 
             l.dev('changes', changes)
             return new EntitiesResult(changes)

@@ -20,7 +20,7 @@
     "knight-criteria": "^2.0.7",
     "knight-json": "^1.0.1",
     "knight-log": "^1.0.6",
-    "knight-orm": "^0.2.0",
+    "knight-orm": "^0.3.0",
     "knight-pg-migration": "^1.0.0",
     "knight-pg-transaction": "^1.0.1",
     "knight-validation": "^1.0.0",
