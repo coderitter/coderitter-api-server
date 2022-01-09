@@ -1,6 +1,6 @@
 import { Result } from 'coderitter-api-remote-method-call'
 import { Criteria } from 'knight-criteria'
-import { Log } from 'knight-log'
+import { Log } from 'knight-log'
 import { Orm } from 'knight-orm'
 import Knight from './Knight'
 import { MariaTransaction } from 'knight-maria-transaction'
@@ -13,16 +13,16 @@ let log = new Log('KnightLogic.ts')
 export default class KnightLogic {
     orm!: Orm
 
-    async storeIfNotAlreadyExist(knight: Knight, tx: MariaTransaction){
+    async storeIfNotAlreadyExist(knight: Knight, tx: MariaTransaction) {
         let l = log.mt('storeIfNotAlreadyExist')
         l.param('knight', knight)
 
         let alreadyExist = await this.read(knight, tx)
-        if(alreadyExist.entities.length === 0){
+        if (alreadyExist.entities.length === 0) {
             let result = await this.store(knight, tx)
             l.dev('created knight', result)
         }
-        else{
+        else {
             l.admin('knight already exists.. skipping..')
         }
     }
@@ -53,7 +53,7 @@ export default class KnightLogic {
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let knights: Knight[] = await this.orm.read(txQuery(tx), Knight, criteria)
+            let knights: Knight[] = await this.orm.load(txQuery(tx), Knight, criteria)
             l.dev('knights', knights)
 
             return new EntitiesResult(knights)
@@ -63,14 +63,14 @@ export default class KnightLogic {
     async count(criteria: Criteria = {}, tx: MariaTransaction): Promise<CountResult> {
         let l = log.mt('count')
         l.param('parameter', criteria)
-    
+
         return tx.runInTransaction(async () => {
             let count = await this.orm.count(txQuery(tx), Knight, criteria)
             l.dev('count', count)
             return new CountResult(count)
         })
     }
-    
+
 
     async delete(knight: Partial<Knight>, tx: MariaTransaction): Promise<EntityResult<Knight>> {
         let l = log.mt('delete')

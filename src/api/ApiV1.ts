@@ -17,12 +17,11 @@ export default class Api extends RemoteMethodApi {
     }
 
     tx(): MariaTransaction {
-        let l = log.mt('tx')
         return new MariaTransaction(this.pool)
     }
 
     chgTx(): ChangeSendingTransaction {
-        let l = log.mt('chgTx')
+        log.fn('chgTx')
         return new ChangeSendingTransaction(
             this.pool,
             Services.get().changeLogic,

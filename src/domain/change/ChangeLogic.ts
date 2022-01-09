@@ -1,5 +1,5 @@
 import { Result } from 'coderitter-api-remote-method-call'
-import { Criteria  } from 'knight-criteria' //readCriteria
+import { Criteria } from 'knight-criteria' //readCriteria
 import { Log } from 'knight-log'
 import { Orm } from 'knight-orm'
 import { MariaTransaction } from 'knight-maria-transaction'
@@ -44,7 +44,7 @@ export default class ChangeLogic {
         l.param('criteria', criteria)
 
         return tx.runInTransaction(async () => {
-            let changes: Change[] = await this.orm.read(txQuery(tx), Change, criteria)
+            let changes: Change[] = await this.orm.load(txQuery(tx), Change, criteria)
 
             l.dev('changes', changes)
             return new EntitiesResult(changes)

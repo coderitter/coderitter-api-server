@@ -22,7 +22,7 @@ export default class WebSocketApi {
             let l = log.fn('onConnection')
             l.admin(
                 'New WebSocket connection from ' +
-                    request.connection.remoteAddress
+                request.connection.remoteAddress
             )
 
             socket.on('message', (data: WebSocket.Data) => {
@@ -33,7 +33,7 @@ export default class WebSocketApi {
 
                     if (data == 'pong') {
                         l.admin('Received pong...')
-                        ;(socket as any).isAlive = true
+                        ; (socket as any).isAlive = true
                     }
                     else {
                         l.admin('Received version number...')
@@ -79,7 +79,7 @@ export default class WebSocketApi {
                     continue
                 }
 
-                ;(client as any).isAlive = false
+                ; (client as any).isAlive = false
                 l.admin('Pinging client...')
                 client.send('ping')
             }
@@ -133,7 +133,7 @@ export default class WebSocketApi {
                     continue
                 }
 
-                ;(client as any).sendingChanges = true
+                ; (client as any).sendingChanges = true
                 clients.push(client)
             }
         }
@@ -157,7 +157,7 @@ export default class WebSocketApi {
         l.admin('Setting all clients to not sending...')
 
         for (let client of clients) {
-            ;(client as any).sendingChanges = false
+            ; (client as any).sendingChanges = false
         }
     }
 }

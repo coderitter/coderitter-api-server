@@ -20,18 +20,18 @@ export default class Change extends KnightChange {
     constructor(entityName: string, method: string)
     constructor(entityName: string, method: Method)
     constructor(entityName: string, methods: (string | Method)[])
-    constructor(classFunction: { new (): any })
-    constructor(classFunction: { new (): any }, entity: object)
-    constructor(classFunction: { new (): any }, entity: object, method: string)
-    constructor(classFunction: { new (): any }, entity: object, method: Method)
+    constructor(classFunction: { new(): any })
+    constructor(classFunction: { new(): any }, entity: object)
+    constructor(classFunction: { new(): any }, entity: object, method: string)
+    constructor(classFunction: { new(): any }, entity: object, method: Method)
     constructor(
-        classFunction: { new (): any },
+        classFunction: { new(): any },
         entity: object,
         methods: (string | Method)[]
     )
-    constructor(classFunction: { new (): any }, method: string)
-    constructor(classFunction: { new (): any }, method: Method)
-    constructor(classFunction: { new (): any }, methods: (string | Method)[])
+    constructor(classFunction: { new(): any }, method: string)
+    constructor(classFunction: { new(): any }, method: Method)
+    constructor(classFunction: { new(): any }, methods: (string | Method)[])
 
     constructor(arg1?: any, arg2?: any, arg3?: any) {
         super(arg1, arg2, arg3)

@@ -15,7 +15,6 @@ export default class DbMigration extends MariaMigration {
     }
 
     async version1() {
-        let l = log.mt('version1')
         if ((await this.getVersion()) >= 1) {
             log.admin('Skipping version 1')
             return

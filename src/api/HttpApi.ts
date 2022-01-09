@@ -37,7 +37,6 @@ export default class HttpApi {
      */
     async start(): Promise<void> {
         this.server.addListener('request', (request, response) => {
-            let l = log.fn('handler')
             if (request.url == '/api_v1') {
                 let data = ''
 
@@ -55,10 +54,15 @@ export default class HttpApi {
         })
 
         return new Promise<void>((resolve, reject) => {
-            this.server?.listen(this.config.port, () => {
-                log.admin('HTTP API started at ' + this.config.port)
-                resolve()
-            })
+            try {
+                this.server?.listen(this.config.port, () => {
+                    log.admin('HTTP API started at ' + this.config.port)
+                    resolve()
+                })
+            }
+            catch (error) {
+                reject(error)
+            }
         })
     }
 
