@@ -16,7 +16,7 @@ export default class Api extends RemoteMethodApi {
     }
 
     chgTx(): ChangeSendingTransaction {
-        log.fn('chgTx')
+        log.mt('chgTx')
         return new ChangeSendingTransaction(Services.get().changeLogic, this.webSocketApi)
     }
 }
