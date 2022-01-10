@@ -35,7 +35,7 @@ export default class Services {
     httpApi!: HttpApi
     webSocketApi!: WebSocketApi
 
-    orm = new Orm(schema, 'maria')
+    orm = new Orm(schema, 'mariadb')
 
     changeLogic = new ChangeLogic()
     knightLogic = new KnightLogic()
