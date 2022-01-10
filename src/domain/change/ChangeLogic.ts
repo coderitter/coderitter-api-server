@@ -15,7 +15,7 @@ export default class ChangeLogic {
     orm!: Orm
 
     async store(change: Change, tx: PgTransaction): Promise<EntityResult<Change>> {
-        let l = log.mt('create')
+        let l = log.mt('store')
         l.param('change', change)
 
         return tx.runInTransaction(async () => {
