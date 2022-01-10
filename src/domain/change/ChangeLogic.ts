@@ -17,7 +17,7 @@ export default class ChangeLogic {
         change: Change,
         tx: MariaTransaction
     ): Promise<EntityResult<Change>> {
-        let l = log.mt('create')
+        let l = log.mt('store')
         l.param('change', change)
 
         return tx.runInTransaction(async () => {
