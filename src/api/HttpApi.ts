@@ -54,22 +54,7 @@ export default class HttpApi {
             }
         })
 
-        return new Promise<void>((resolve, reject) => {
-            this.server?.on('error', (e: StartNodeError) => {
-                if (e.code === 'EADDRINUSE') {
-                    log.admin('Address in use, retrying...')
-                    setTimeout(() => {
-                        this.server?.close()
-                        this.server?.listen(this.config.port, () => {
-                            log.admin('HTTP API started at ' + this.config.port)
-                            resolve()
-                        })
-                    }, 1000)
-                }
-                else {
-                    reject()
-                }
-            })
+        return new Promise<void>((resolve) => {
             this.server?.listen(this.config.port, () => {
                 log.admin('HTTP API started at ' + this.config.port)
                 resolve()
