@@ -6,10 +6,6 @@ import { Log } from 'knight-log'
 
 let log = new Log('HttpApi.ts')
 
-
-interface StartNodeError extends Error{
-    code: string
-}
 /**
  * It receives the data directly from the HTTP server and
  * uses the Api object to execute the remote method call.
