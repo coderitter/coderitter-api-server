@@ -7,13 +7,11 @@ import {
     EntitiesVersionResult,
     EntityResult
 } from './domain/api'
-import Change from './domain/change/Change'
 import Knight from './domain/knight/Knight'
 
 export default {
     // change
     Changes: () => new Changes(),
-    Change: () => new Change(),
 
     // knight
     Knight: () => new Knight(),

@@ -41,10 +41,10 @@ export default class KnightLogic {
                 return Result.misfits(misfits) as any
             }
 
-            let stored = await this.orm.store(txQuery(tx), Knight, knight)
-            l.dev('stored', stored)
+            let changes = await this.orm.store(txQuery(tx), Knight, knight)
+            l.dev('changes', changes)
 
-            return new EntityResult(stored)
+            return new EntityResult(changes)
         })
     }
 
@@ -86,10 +86,10 @@ export default class KnightLogic {
                 return Result.misfits(misfits) as any
             }
 
-            let deleted = await this.orm.delete(txQuery(tx), Knight, knight)
-            l.dev('deleted', deleted)
+            let changes = await this.orm.delete(txQuery(tx), Knight, knight)
+            l.dev('changes', changes)
 
-            return new EntityResult(deleted)
+            return new EntityResult(changes)
         })
     }
 }
