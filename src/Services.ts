@@ -2,12 +2,9 @@ import http from 'http'
 import { Log } from 'knight-log'
 import { Pool } from 'mariadb'
 import mariadb from 'mariadb'
-import WebSocket from 'ws'
 import ApiV1 from './api/ApiV1'
 import HttpApi from './api/HttpApi'
-import WebSocketApi from './api/WebSocketApi'
 import { getConfigByArgvOrEnvOrDefault, test } from './config'
-import ChangeLogic from './domain/change/ChangeLogic'
 import DbMigration from './domain/DbMigration'
 import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
@@ -29,15 +26,12 @@ export default class Services {
     pool!: Pool
 
     httpServer!: http.Server
-    webSocketServer!: WebSocket.Server
 
     apiV1 = new ApiV1()
     httpApi!: HttpApi
-    webSocketApi!: WebSocketApi
 
     orm = new Orm(schema, 'mariadb')
 
-    changeLogic = new ChangeLogic()
     knightLogic = new KnightLogic()
 
     async start() {
@@ -52,7 +46,6 @@ export default class Services {
 
     inject() {
         this.knightLogic.orm = this.orm
-        this.changeLogic.orm = this.orm
     }
 
     async startDb() {
@@ -67,24 +60,6 @@ export default class Services {
     async startServer() {
         // HTTP Server
         this.httpServer = http.createServer()
-
-        // WebSocket Server
-        this.webSocketServer = new WebSocket.Server(
-            {
-                server: this.httpServer
-            },
-            () => {
-                let address = this.webSocketServer.address() as any
-                log.admin(
-                    'WebSocket server running at ' +
-                    address.address +
-                    ':' +
-                    address.port +
-                    ' - ' +
-                    address.family
-                )
-            }
-        )
     }
 
     startApis() {
@@ -95,18 +70,10 @@ export default class Services {
         )
         this.httpApi.server = this.httpServer
 
-        this.webSocketApi = new WebSocketApi()
-        this.webSocketApi.webSocketServer = this.webSocketServer
-        this.webSocketApi.pool = this.pool
-        this.webSocketApi.changeLogic = this.changeLogic
-
         this.apiV1.pool = this.pool
-        this.apiV1.webSocketApi = this.webSocketApi
 
         this.httpApi.start()
         log.admin('Started HTTP API (POSTonly)')
-        this.webSocketApi.start()
-        log.admin('Started WebSocket API')
 
         log.admin(
             'Initialized HTTP API with remote methods',
@@ -125,11 +92,6 @@ export default class Services {
         if (this.httpServer) {
             this.httpServer.close()
             log.admin('Stopped HTTP server')
-        }
-
-        if (this.webSocketServer) {
-            this.webSocketServer.close()
-            log.admin('Stopped WebSocket server')
         }
 
         Log.watcher?.close()

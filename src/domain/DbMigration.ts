@@ -22,15 +22,6 @@ export default class DbMigration extends MariaMigration {
 
         try {
             await this.pool.query(`
-                create table onchange(
-                    version INT AUTO_INCREMENT PRIMARY KEY,
-                    entityName VARCHAR(100),
-                    method VARCHAR(20),
-                    entity TEXT,
-                    description TEXT
-            );`)
-
-            await this.pool.query(`
                 create table knight(
                     id INT AUTO_INCREMENT PRIMARY KEY,
                     name VARCHAR(40),
@@ -42,6 +33,6 @@ export default class DbMigration extends MariaMigration {
         }
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add change and knight table)')
+        log.admin('Migrated to version 1 (Add knight table)')
     }
 }
