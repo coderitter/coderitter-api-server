@@ -4,9 +4,7 @@ import { Log } from 'knight-log'
 import WebSocket from 'ws'
 import ApiV1 from './api/ApiV1'
 import HttpApi from './api/HttpApi'
-import WebSocketApi from './api/WebSocketApi'
 import { getConfigByArgvOrEnvOrDefault, test } from './config'
-import ChangeLogic from './domain/change/ChangeLogic'
 import DbMigration from './domain/DbMigration'
 import DemoData from './domain/DemoData'
 import instantiator from './Instantiator'
@@ -36,11 +34,9 @@ export default class Services {
 
     apiV1 = new ApiV1
     httpApi!: HttpApi
-    webSocketApi!: WebSocketApi
 
     orm = new Orm(schema, 'postgres')
 
-    changeLogic = new ChangeLogic()
     knightLogic = new KnightLogic()
 
     async start() {
@@ -55,7 +51,6 @@ export default class Services {
 
     inject() {
         this.knightLogic.orm = this.orm
-        this.changeLogic.orm = this.orm
 
     }
 
@@ -81,17 +76,10 @@ export default class Services {
         this.httpApi = new HttpApi(this.apiV1, instantiator, this.config.httpApi)
         this.httpApi.server = this.httpServer
 
-        this.webSocketApi = new WebSocketApi
-        this.webSocketApi.webSocketServer = this.webSocketServer
-        this.webSocketApi.pool = this.pool
-        this.webSocketApi.changeLogic = this.changeLogic
-
         this.apiV1.pool = this.pool
-        this.apiV1.webSocketApi = this.webSocketApi
 
         this.httpApi.start()
         log.admin('Started HTTP API (POSTonly)')
-        this.webSocketApi.start()
         log.admin('Started WebSocket API')
 
         log.admin('Initialized HTTP API with remote methods', this.apiV1.methodNames)

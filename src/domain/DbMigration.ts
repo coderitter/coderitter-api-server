@@ -22,16 +22,6 @@ export default class DbMigration extends PostgresMigration {
         }
 
         await this.pool.query(`
-            CREATE TABLE Change (
-                version SERIAL PRIMARY KEY,
-                entityName VARCHAR(100),
-                method VARCHAR(20),
-                entity TEXT,
-                description TEXT
-            )`
-        )
-
-        await this.pool.query(`
             create table knight(
                 id SERIAL PRIMARY KEY,
                 name VARCHAR(40),
@@ -39,6 +29,6 @@ export default class DbMigration extends PostgresMigration {
             );`)
 
         await this.increaseVersion()
-        log.admin('Migrated to version 1 (Add change table and table knight)')
+        log.admin('Migrated to version 1 (Add table knight)')
     }
 }
