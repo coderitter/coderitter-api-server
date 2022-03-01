@@ -13,19 +13,17 @@
   },
   "dependencies": {
     "@types/pg": "^7.14.11",
-    "@types/ws": "^6.0.4",
     "coderitter-api-remote-method-api": "^6.0.0",
     "coderitter-api-remote-method-call": "^4.0.1",
-    "knight-change": "^1.0.0",
+    "knight-change": "^2.0.0",
     "knight-criteria": "^2.0.7",
     "knight-json": "^1.0.1",
     "knight-log": "^1.0.6",
-    "knight-orm": "^0.3.1",
+    "knight-orm": "^0.4.0",
     "knight-pg-migration": "^1.0.0",
     "knight-pg-transaction": "^1.0.3",
     "knight-validation": "^1.0.0",
-    "pg": "^8.5.1",
-    "ws": "^7.4.5"
+    "pg": "^8.5.1"
   },
   "devDependencies": {
     "@types/chai": "^4.2.14",

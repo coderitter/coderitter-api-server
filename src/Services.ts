@@ -1,7 +1,6 @@
 import http from 'http'
 import { Pool } from 'pg'
 import { Log } from 'knight-log'
-import WebSocket from 'ws'
 import ApiV1 from './api/ApiV1'
 import HttpApi from './api/HttpApi'
 import { getConfigByArgvOrEnvOrDefault, test } from './config'
@@ -30,7 +29,6 @@ export default class Services {
     pool!: Pool
 
     httpServer!: http.Server
-    webSocketServer!: WebSocket.Server
 
     apiV1 = new ApiV1
     httpApi!: HttpApi
@@ -62,14 +60,6 @@ export default class Services {
     async startServer() {
         // HTTP Server
         this.httpServer = http.createServer()
-
-        // WebSocket Server
-        this.webSocketServer = new WebSocket.Server({
-            server: this.httpServer
-        }, () => {
-            let address = this.webSocketServer.address() as any
-            log.admin('WebSocket server running at ' + address.address + ':' + address.port + ' - ' + address.family)
-        })
     }
 
     startApis() {
@@ -96,11 +86,6 @@ export default class Services {
         if (this.httpServer) {
             this.httpServer.close()
             log.admin('Stopped HTTP server')
-        }
-
-        if (this.webSocketServer) {
-            this.webSocketServer.close()
-            log.admin('Stopped WebSocket server')
         }
 
         Log.watcher?.close()
